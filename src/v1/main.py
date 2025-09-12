@@ -114,7 +114,7 @@ def main_page() -> None:
                                     marker_color="#FF4901"))
     fig.update_layout(
         yaxis_title="Power [GW]",
-        xaxis_title="Time",
+        xaxis_title="Time (UTC)",
         yaxis_range=[0, None],
     )
 
