@@ -108,7 +108,7 @@ def main_page() -> None:
     total_forecast = total_forecast.groupby(["timestamp"]).sum().reset_index()
 
     # plot in ploty
-    st.write(f"Global forecast, capacity of {global_solar_capacity} GW.")
+    st.write(f"Global forecast, capacity of {global_solar_capacity:.2f} GW.")
     fig = go.Figure(data=go.Scatter(x=total_forecast["timestamp"],
                                     y=total_forecast["power_gw"],
                                     marker_color="#FF4901"))
