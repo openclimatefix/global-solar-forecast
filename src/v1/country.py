@@ -1,5 +1,6 @@
 """A Streamlit app to show global solar forecast."""
 import warnings
+from zoneinfo import ZoneInfo
 
 import geopandas as gpd
 import pandas as pd
@@ -7,14 +8,45 @@ import plotly.graph_objects as go
 import pycountry
 import streamlit as st
 from forecast import get_forecast
+from timezonefinder import TimezoneFinder
 
 data_dir = "src/v1/data"
+
+
+def get_country_timezone(lat: float, lon: float) -> str:
+    """Get timezone for a country based on its coordinates."""
+    tf = TimezoneFinder()
+    timezone_str = tf.timezone_at(lat=lat, lng=lon)
+    return timezone_str or "UTC"
+
+
+def convert_utc_to_local_time(forecast_df: pd.DataFrame, timezone_str: str) -> pd.DataFrame:
+    """Convert UTC timestamps to local time for a given timezone."""
+    forecast_df = forecast_df.copy()
+
+    # Convert index to datetime if it's not already
+    if not isinstance(forecast_df.index, pd.DatetimeIndex):
+        forecast_df.index = pd.to_datetime(forecast_df.index)
+
+    # Ensure index is UTC
+    if forecast_df.index.tz is None:
+        forecast_df.index = forecast_df.index.tz_localize("UTC")
+
+    # Convert to local timezone
+    try:
+        local_tz = ZoneInfo(timezone_str)
+        forecast_df.index = forecast_df.index.tz_convert(local_tz)
+    except Exception:
+        # If timezone conversion fails, keep as UTC
+        st.warning(f"Could not convert to timezone {timezone_str}, using UTC")
+
+    return forecast_df
 
 
 def country_page() -> None:
     """Country page, select a country and see the forecast for that country."""
     st.header("Country Solar Forecast")
-    st.write("This page will shows individual country forecasts")
+    st.write("This page shows individual country forecasts in local time")
 
     # Lets load a map of the world
     world = gpd.read_file(f"{data_dir}/countries.geojson")
@@ -72,13 +104,22 @@ def country_page() -> None:
     lat = centroid.y.values[0]
     lon = centroid.x.values[0]
 
+    # Get timezone for this country
+    timezone_str = get_country_timezone(lat, lon)
+    st.info(f" Displaying forecast in {country.name} local time (Timezone: {timezone_str})")
+
     capacity = solar_capacity_per_country[country.alpha_3]
     forecast_data = get_forecast(country.name, capacity, lat, lon)
+
     if forecast_data is None:
         st.error(f"Unable to get forecast for {country.name}")
         return
+
     forecast = pd.DataFrame(forecast_data)
     forecast = forecast.rename(columns={"power_kw": "power_gw"})
+
+    # Convert timestamps to local time
+    forecast = convert_utc_to_local_time(forecast, timezone_str)
 
     # plot in ploty
     st.write(f"{country.name} Solar Forecast, capacity of {capacity} GW.")
@@ -89,8 +130,13 @@ def country_page() -> None:
     ))
     fig.update_layout(
         yaxis_title="Power [GW]",
-        xaxis_title="Time",
+        xaxis_title="Local Time",
         yaxis_range=[0, None],
+        title=f"Solar Forecast for {country.name} (Local Time)",
     )
 
     st.plotly_chart(fig)
+
+    # Show forecast data table with local time
+    with st.expander("View Forecast Data"):
+        st.dataframe(forecast)

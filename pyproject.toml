@@ -26,7 +26,8 @@ dependencies = [
     "geopandas",
     "pycountry",
     "plotly",
-    "scipy"
+    "scipy",
+    "timezonefinder",
 ]
 
 [dependency-groups]
@@ -88,6 +89,7 @@ module = [
     "geopandas",
     "plotly.*",
     "streamlit.*",
+    "timezonefinder",
 ]
 ignore_missing_imports = true
 
