@@ -14,8 +14,145 @@ from forecast import get_forecast
 data_dir = "src/v1/data"
 
 
+def display_ocf_logo() -> None:
+    """Display OCF logo as an elegant header banner."""
+    logo_path = "src/assets/ocf_logo.png"
+    
+    # Add custom CSS for better styling
+    st.markdown("""
+        <style>
+        .main > div {
+            padding-top: 1rem;
+        }
+        
+        /* Custom styling for the app */
+        .stApp {
+            background-color: var(--background-color);
+        }
+        
+        /* Header styling */
+        .ocf-header {
+            background: linear-gradient(135deg, #DC143C 0%, #B22222 30%, #CD5C5C 70%, #F08080 100%);
+            padding: 18px 0;
+            margin: -1rem -1rem 2rem -1rem;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 3px 10px rgba(220, 20, 60, 0.12);
+            border-bottom: 2px solid rgba(220, 20, 60, 0.2);
+        }
+        
+        .ocf-header:hover {
+            box-shadow: 0 5px 16px rgba(220, 20, 60, 0.18);
+            transform: translateY(-1px);
+            transition: all 0.3s ease;
+        }
+        
+        /* Logo and text container */
+        .ocf-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .ocf-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s ease;
+        }
+        
+        .ocf-link:hover {
+            transform: scale(1.03);
+        }
+        
+        .ocf-link:hover .ocf-text {
+            text-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            transform: translateY(-1px);
+        }
+        
+        .ocf-logo {
+            height: 40px;
+            width: auto;
+            margin-right: 15px;
+            filter: brightness(0) invert(1);
+            drop-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        
+        .ocf-text {
+            font-family: 'Source Code Pro', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-weight: 600;
+            font-size: 20px;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            color: #ffffff;
+            text-transform: none;
+            line-height: 1.3;
+            margin-top: 2px;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .ocf-text {
+                font-size: 18px;
+                letter-spacing: 0.3px;
+            }
+            .ocf-logo {
+                height: 35px;
+                margin-right: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .ocf-text {
+                font-size: 16px;
+                letter-spacing: 0.2px;
+            }
+            .ocf-logo {
+                height: 32px;
+                margin-right: 10px;
+            }
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    
+    # Check if logo file exists
+    if Path(logo_path).exists():
+        # Create a header banner with OCF branding
+        st.markdown(
+            f"""
+            <div class="ocf-header">
+                <div class="ocf-content">
+                    <a href="https://openclimatefix.org" target="_blank" class="ocf-link">
+                        <img src="data:image/png;base64,{_get_base64_encoded_image(logo_path)}" 
+                             class="ocf-logo" 
+                             alt="Open Climate Fix Logo">
+                        <div class="ocf-text">
+                            Open Climate Fix
+                        </div>
+                    </a>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+
+def _get_base64_encoded_image(image_path: str) -> str:
+    """Convert image to base64 string for embedding in HTML."""
+    import base64
+    
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
+
+
 def main_page() -> None:
     """Main page, show a map of the world with the solar forecast."""
+    # Display OCF logo in sidebar
+    display_ocf_logo()
+    
     st.header("Global Solar Forecast")
 
     # Lets load a map of the world
@@ -222,6 +359,9 @@ def main_page() -> None:
 
 def docs_page() -> None:
     """Documentation page."""
+    # Display OCF logo in sidebar
+    display_ocf_logo()
+    
     st.markdown("# Documentation")
     st.write(
         "There are two main components to this app, the solar capacities "
@@ -278,6 +418,9 @@ def docs_page() -> None:
 
 def capacities_page() -> None:
     """Solar capacities page."""
+    # Display OCF logo in sidebar
+    display_ocf_logo()
+    
     st.header("Solar Capacities")
     st.write("This page shows the solar capacities per country.")
     solar_capacity_per_country_df = pd.read_csv(
