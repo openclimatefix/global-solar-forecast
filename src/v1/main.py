@@ -16,7 +16,7 @@ data_dir = "src/v1/data"
 
 def display_ocf_logo() -> None:
     """Display OCF logo as an elegant header banner."""
-    logo_path = "src/assets/ocf_logo.png"
+    logo_path = "src/assets/logo_ocf.png"
 
     # Add custom CSS for better styling
     st.markdown("""
@@ -32,16 +32,16 @@ def display_ocf_logo() -> None:
 
         /* Header styling */
         .ocf-header {
-            background: linear-gradient(135deg, #DC143C 0%, #B22222 30%, #CD5C5C 70%, #F08080 100%);
-            padding: 18px 0;
+            background: linear-gradient(135deg, #1f4e79 0%, #2980b9 50%, #3498db 100%);
+            padding: 20px 0;
             margin: -1rem -1rem 2rem -1rem;
-            border-radius: 0 0 12px 12px;
-            box-shadow: 0 3px 10px rgba(220, 20, 60, 0.12);
-            border-bottom: 2px solid rgba(220, 20, 60, 0.2);
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 15px rgba(31, 78, 121, 0.15);
+            border-bottom: 3px solid rgba(31, 78, 121, 0.3);
         }
 
         .ocf-header:hover {
-            box-shadow: 0 5px 16px rgba(220, 20, 60, 0.18);
+            box-shadow: 0 6px 20px rgba(31, 78, 121, 0.2);
             transform: translateY(-1px);
             transition: all 0.3s ease;
         }
@@ -74,45 +74,56 @@ def display_ocf_logo() -> None:
         }
 
         .ocf-logo {
-            height: 40px;
+            height: 45px;
             width: auto;
             margin-right: 15px;
-            filter: brightness(0) invert(1);
             drop-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .ocf-logo:hover {
+            transform: scale(1.05);
         }
 
         .ocf-text {
-            font-family: 'Source Code Pro', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-            font-weight: 600;
-            font-size: 20px;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+                         sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: 0.3px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
             color: #ffffff;
             text-transform: none;
-            line-height: 1.3;
-            margin-top: 2px;
+            line-height: 1.2;
+            margin-top: 0;
         }
 
         /* Responsive design */
         @media (max-width: 768px) {
             .ocf-text {
-                font-size: 18px;
-                letter-spacing: 0.3px;
+                font-size: 19px;
+                letter-spacing: 0.2px;
             }
             .ocf-logo {
-                height: 35px;
+                height: 40px;
                 margin-right: 12px;
+            }
+            .ocf-header {
+                padding: 16px 0;
             }
         }
 
         @media (max-width: 480px) {
             .ocf-text {
-                font-size: 16px;
-                letter-spacing: 0.2px;
+                font-size: 17px;
+                letter-spacing: 0.1px;
             }
             .ocf-logo {
-                height: 32px;
+                height: 36px;
                 margin-right: 10px;
+            }
+            .ocf-header {
+                padding: 14px 0;
             }
         }
         </style>
