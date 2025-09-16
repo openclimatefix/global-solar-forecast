@@ -173,7 +173,6 @@ def main_page() -> None:
 
     st.header("Global Solar Forecast")
 
-
     # Lets load a map of the world
     world = gpd.read_file(f"{data_dir}/countries.geojson")
 
@@ -196,12 +195,12 @@ def main_page() -> None:
     solar_capacity_per_country = solar_capacity_per_country_df.to_dict()["capacity_gw"]
     global_solar_capacity = solar_capacity_per_country_df["capacity_gw"].sum()
 
+    # TODO: Implement normalized functionality
     # drop down menu in side bar
-    normalized = st.checkbox(
-        "Normalised each countries solar forecast (0-100%)",
-        value=False,
-    )
-
+    # normalized = st.checkbox(
+    #     "Normalised each countries solar forecast (0-100%)",
+    #     value=False,
+    # )
 
     # run forecast for that countries
     forecast_per_country: dict[str, pd.DataFrame] = {}
@@ -268,8 +267,10 @@ def main_page() -> None:
     st.write(f"Global forecast, capacity of {global_solar_capacity:.2f} GW.")
     fig = go.Figure(
         data=go.Scatter(
-            x=total_forecast["timestamp"], y=total_forecast["power_gw"], marker_color="#FF4901"
-        )
+            x=total_forecast["timestamp"],
+            y=total_forecast["power_gw"],
+            marker_color="#FF4901",
+        ),
     )
 
     fig.update_layout(
@@ -333,9 +334,10 @@ def main_page() -> None:
         st.error("No forecast data available for the map")
         return
 
-    normalized = st.checkbox(
-        "Normalised each countries solar forecast (0-100%)", value=False,
-    )
+    # TODO: Implement normalized functionality
+    # normalized = st.checkbox(
+    #     "Normalised each countries solar forecast (0-100%)", value=False,
+    # )
 
     # join 'world' and 'selected_generation'
     world = world.merge(
@@ -359,9 +361,8 @@ def main_page() -> None:
             customdata=world["country_name"]
             if "country_name" in world.columns
             else world["adm0_a3"],
-        )
+        ),
     )
-
 
     fig.update_layout(
         mapbox_style="carto-positron",

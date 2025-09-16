@@ -1,4 +1,5 @@
 """A Streamlit app to show global solar forecast."""
+
 import warnings
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -7,9 +8,9 @@ import geopandas as gpd
 import pandas as pd
 import plotly.graph_objects as go
 import pycountry
-import pytz
 import streamlit as st
 from forecast import get_forecast
+from timezonefinder import TimezoneFinder
 
 data_dir = "src/v1/data"
 
@@ -19,7 +20,8 @@ def display_ocf_logo() -> None:
     logo_path = "src/assets/ocf_logo.png"
 
     # Add custom CSS for better styling
-    st.markdown("""
+    st.markdown(
+        """
         <style>
         .main > div {
             padding-top: 1rem;
@@ -116,7 +118,9 @@ def display_ocf_logo() -> None:
             }
         }
         </style>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
     # Check if logo file exists
     if Path(logo_path).exists():
@@ -153,7 +157,6 @@ def get_country_timezone(lat: float, lon: float) -> str:
     tf = TimezoneFinder()
     timezone_str = tf.timezone_at(lat=lat, lng=lon)
     return timezone_str or "UTC"
-
 
 
 def convert_utc_to_local_time(forecast_df: pd.DataFrame, timezone_str: str) -> pd.DataFrame:
@@ -194,7 +197,8 @@ def country_page() -> None:
 
     # Get list of countries and their solar capcities now from the Ember API
     solar_capacity_per_country_df = pd.read_csv(
-        f"{data_dir}/solar_capacities.csv", index_col=0,
+        f"{data_dir}/solar_capacities.csv",
+        index_col=0,
     )
 
     # remove nans in index
@@ -203,14 +207,11 @@ def country_page() -> None:
 
     # add column with country code and name
     solar_capacity_per_country_df["country_code_and_name"] = (
-        solar_capacity_per_country_df.index + " - " +
-        solar_capacity_per_country_df["country_name"]
+        solar_capacity_per_country_df.index + " - " + solar_capacity_per_country_df["country_name"]
     )
 
     # convert to dict
-    solar_capacity_per_country = solar_capacity_per_country_df.to_dict()[
-        "capacity_gw"
-    ]
+    solar_capacity_per_country = solar_capacity_per_country_df.to_dict()["capacity_gw"]
     country_code_and_names = list(
         solar_capacity_per_country_df["country_code_and_name"],
     )
@@ -226,7 +227,9 @@ def country_page() -> None:
         del st.session_state.selected_country_code
 
     selected_country = st.selectbox(
-        "Select a country:", country_code_and_names, index=default_index,
+        "Select a country:",
+        country_code_and_names,
+        index=default_index,
     )
     selected_country_code = selected_country.split(" - ")[0]
 
@@ -244,7 +247,7 @@ def country_page() -> None:
     lon = centroid.x.values[0]
 
     # Get timezone for this country using robust country-name approach
-    timezone_str = get_country_timezone(country.name)
+    timezone_str = get_country_timezone(lat, lon)
     st.info(f" Displaying forecast in {country.name} local time (Timezone: {timezone_str})")
 
     capacity = solar_capacity_per_country[country.alpha_3]
@@ -262,11 +265,13 @@ def country_page() -> None:
 
     # plot in ploty
     st.write(f"{country.name} Solar Forecast, capacity of {capacity} GW.")
-    fig = go.Figure(data=go.Scatter(
-        x=forecast.index,
-        y=forecast["power_gw"],
-        marker_color="#FF4901",
-    ))
+    fig = go.Figure(
+        data=go.Scatter(
+            x=forecast.index,
+            y=forecast["power_gw"],
+            marker_color="#FF4901",
+        )
+    )
     fig.update_layout(
         yaxis_title="Power [GW]",
         xaxis_title="Local Time",
