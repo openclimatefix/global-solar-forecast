@@ -7,9 +7,9 @@ import geopandas as gpd
 import pandas as pd
 import plotly.graph_objects as go
 import pycountry
+import pytz
 import streamlit as st
 from forecast import get_forecast
-from timezonefinder import TimezoneFinder
 
 data_dir = "src/v1/data"
 
@@ -155,6 +155,7 @@ def get_country_timezone(lat: float, lon: float) -> str:
     return timezone_str or "UTC"
 
 
+
 def convert_utc_to_local_time(forecast_df: pd.DataFrame, timezone_str: str) -> pd.DataFrame:
     """Convert UTC timestamps to local time for a given timezone."""
     forecast_df = forecast_df.copy()
@@ -242,8 +243,8 @@ def country_page() -> None:
     lat = centroid.y.values[0]
     lon = centroid.x.values[0]
 
-    # Get timezone for this country
-    timezone_str = get_country_timezone(lat, lon)
+    # Get timezone for this country using robust country-name approach
+    timezone_str = get_country_timezone(country.name)
     st.info(f" Displaying forecast in {country.name} local time (Timezone: {timezone_str})")
 
     capacity = solar_capacity_per_country[country.alpha_3]

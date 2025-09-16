@@ -173,6 +173,7 @@ def main_page() -> None:
 
     st.header("Global Solar Forecast")
 
+
     # Lets load a map of the world
     world = gpd.read_file(f"{data_dir}/countries.geojson")
 
@@ -200,6 +201,7 @@ def main_page() -> None:
         "Normalised each countries solar forecast (0-100%)",
         value=False,
     )
+
 
     # run forecast for that countries
     forecast_per_country: dict[str, pd.DataFrame] = {}
@@ -238,8 +240,7 @@ def main_page() -> None:
             forecast = forecast.rename(columns={"power_kw": "power_gw"})
 
             # display normalized forecast
-            if normalized:
-                forecast["power_gw"] = forecast["power_gw"] / capacity * 100
+            forecast["power_percentage"] = forecast["power_gw"] / capacity * 100
 
             forecast_per_country[country.alpha_3] = forecast
 
@@ -270,13 +271,14 @@ def main_page() -> None:
             x=total_forecast["timestamp"], y=total_forecast["power_gw"], marker_color="#FF4901"
         )
     )
+
     fig.update_layout(
         yaxis_title="Power [GW]",
         xaxis_title="Time (UTC)",
         yaxis_range=[0, None],
+        title="Global Solar Power Forecast",
     )
-    if not normalized:
-        st.plotly_chart(fig)
+    st.plotly_chart(fig)
     # now lets make a map plot, of the generation for different forecast
     # horizons
     # get available timestamps for the slider
@@ -323,11 +325,17 @@ def main_page() -> None:
         )
 
         # get generation for selected timestamp
+
         selected_generation = all_forecasts_df[all_forecasts_df["timestamp"] == selected_timestamp]
         selected_generation = selected_generation[["country_code", "power_gw"]]
+
     else:
         st.error("No forecast data available for the map")
         return
+
+    normalized = st.checkbox(
+        "Normalised each countries solar forecast (0-100%)", value=False,
+    )
 
     # join 'world' and 'selected_generation'
     world = world.merge(
@@ -353,6 +361,7 @@ def main_page() -> None:
             else world["adm0_a3"],
         )
     )
+
 
     fig.update_layout(
         mapbox_style="carto-positron",
