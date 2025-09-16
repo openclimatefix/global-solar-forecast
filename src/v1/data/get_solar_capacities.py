@@ -22,7 +22,7 @@ df = df[df["Category"] == "Capacity"]
 df = df[df["Variable"] == "Solar"]
 
 df = df.rename(
-    columns={"Value": "capacity_gw", "Area": "country_name", "ISO 3 code": "country_code"}
+    columns={"Value": "capacity_gw", "Area": "country_name", "ISO 3 code": "country_code"},
 )
 df = df[["country_code", "capacity_gw", "country_name"]]
 df["source"] = "Ember"

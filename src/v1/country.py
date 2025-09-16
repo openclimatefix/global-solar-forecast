@@ -270,7 +270,7 @@ def country_page() -> None:
             x=forecast.index,
             y=forecast["power_gw"],
             marker_color="#FF4901",
-        )
+        ),
     )
     fig.update_layout(
         yaxis_title="Power [GW]",
