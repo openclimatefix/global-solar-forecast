@@ -1,4 +1,5 @@
 """A Streamlit app to show global solar forecast."""
+
 import json
 import warnings
 from pathlib import Path
@@ -19,7 +20,8 @@ def display_ocf_logo() -> None:
     logo_path = "src/assets/logo_ocf.png"
 
     # Add custom CSS for better styling
-    st.markdown("""
+    st.markdown(
+        """
         <style>
         .main > div {
             padding-top: 1rem;
@@ -32,18 +34,31 @@ def display_ocf_logo() -> None:
 
         /* Header styling */
         .ocf-header {
-            background: linear-gradient(135deg, #1f4e79 0%, #2980b9 50%, #3498db 100%);
+            background: transparent;
             padding: 20px 0;
             margin: -1rem -1rem 2rem -1rem;
-            border-radius: 0 0 15px 15px;
-            box-shadow: 0 4px 15px rgba(31, 78, 121, 0.15);
-            border-bottom: 3px solid rgba(31, 78, 121, 0.3);
+            border-bottom: 1px solid #e0e0e0;
         }
 
         .ocf-header:hover {
-            box-shadow: 0 6px 20px rgba(31, 78, 121, 0.2);
-            transform: translateY(-1px);
+            border-bottom-color: #ccc;
             transition: all 0.3s ease;
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            .ocf-header {
+                border-bottom: 1px solid #333;
+            }
+            .ocf-header:hover {
+                border-bottom-color: #555;
+            }
+            .ocf-link {
+                color: #fff !important;
+            }
+            .ocf-text {
+                color: #fff !important;
+            }
         }
 
         /* Logo and text container */
@@ -60,39 +75,29 @@ def display_ocf_logo() -> None:
             display: flex;
             align-items: center;
             text-decoration: none;
-            color: white;
-            transition: transform 0.2s ease;
+            color: var(--text-color, #333);
+            transition: opacity 0.2s ease;
         }
 
         .ocf-link:hover {
-            transform: scale(1.03);
-        }
-
-        .ocf-link:hover .ocf-text {
-            text-shadow: 0 3px 8px rgba(0,0,0,0.3);
-            transform: translateY(-1px);
+            opacity: 0.8;
         }
 
         .ocf-logo {
-            height: 45px;
+            height: 90px;
             width: auto;
-            margin-right: 15px;
-            drop-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            transition: transform 0.2s ease;
-        }
-
-        .ocf-logo:hover {
-            transform: scale(1.05);
+            margin-right: 25px;
+            transition: opacity 0.2s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
         }
 
         .ocf-text {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
                          sans-serif;
             font-weight: 700;
-            font-size: 22px;
+            font-size: 28px;
             letter-spacing: 0.3px;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            color: #ffffff;
+            color: var(--text-color, #333);
             text-transform: none;
             line-height: 1.2;
             margin-top: 0;
@@ -101,12 +106,12 @@ def display_ocf_logo() -> None:
         /* Responsive design */
         @media (max-width: 768px) {
             .ocf-text {
-                font-size: 19px;
+                font-size: 22px;
                 letter-spacing: 0.2px;
             }
             .ocf-logo {
-                height: 40px;
-                margin-right: 12px;
+                height: 55px;
+                margin-right: 15px;
             }
             .ocf-header {
                 padding: 16px 0;
@@ -115,11 +120,11 @@ def display_ocf_logo() -> None:
 
         @media (max-width: 480px) {
             .ocf-text {
-                font-size: 17px;
+                font-size: 18px;
                 letter-spacing: 0.1px;
             }
             .ocf-logo {
-                height: 36px;
+                height: 38px;
                 margin-right: 10px;
             }
             .ocf-header {
@@ -127,7 +132,9 @@ def display_ocf_logo() -> None:
             }
         }
         </style>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
     # Check if logo file exists
     if Path(logo_path).exists():
@@ -171,7 +178,8 @@ def main_page() -> None:
 
     # Get list of countries and their solar capcities now from the Ember API
     solar_capacity_per_country_df = pd.read_csv(
-        f"{data_dir}/solar_capacities.csv", index_col=0,
+        f"{data_dir}/solar_capacities.csv",
+        index_col=0,
     )
 
     # remove nans in index
@@ -180,19 +188,17 @@ def main_page() -> None:
 
     # add column with country code and name
     solar_capacity_per_country_df["country_code_and_name"] = (
-        solar_capacity_per_country_df.index + " - " +
-        solar_capacity_per_country_df["country_name"]
+        solar_capacity_per_country_df.index + " - " + solar_capacity_per_country_df["country_name"]
     )
 
     # convert to dict
-    solar_capacity_per_country = solar_capacity_per_country_df.to_dict()[
-        "capacity_gw"
-    ]
+    solar_capacity_per_country = solar_capacity_per_country_df.to_dict()["capacity_gw"]
     global_solar_capacity = solar_capacity_per_country_df["capacity_gw"].sum()
 
     # drop down menu in side bar
     normalized = st.checkbox(
-        "Normalised each countries solar forecast (0-100%)", value=False,
+        "Normalised each countries solar forecast (0-100%)",
+        value=False,
     )
 
     # run forecast for that countries
@@ -200,10 +206,12 @@ def main_page() -> None:
     my_bar = st.progress(0)
     countries = list(pycountry.countries)
     for i in range(len(countries)):
-        my_bar.progress(int(i/len(countries)*100),
-                        f"Loading Solar forecast for {countries[i].name} \
+        my_bar.progress(
+            int(i / len(countries) * 100),
+            f"Loading Solar forecast for {countries[i].name} \
                         ({countries[i].alpha_3}) \
-                        ({i+1}/{len(countries)})")
+                        ({i + 1}/{len(countries)})",
+        )
         country = countries[i]
 
         if country.alpha_3 not in solar_capacity_per_country:
@@ -257,9 +265,11 @@ def main_page() -> None:
 
     # plot in ploty
     st.write(f"Global forecast, capacity of {global_solar_capacity:.2f} GW.")
-    fig = go.Figure(data=go.Scatter(x=total_forecast["timestamp"],
-                                    y=total_forecast["power_gw"],
-                                    marker_color="#FF4901"))
+    fig = go.Figure(
+        data=go.Scatter(
+            x=total_forecast["timestamp"], y=total_forecast["power_gw"], marker_color="#FF4901"
+        )
+    )
     fig.update_layout(
         yaxis_title="Power [GW]",
         xaxis_title="Time (UTC)",
@@ -282,9 +292,7 @@ def main_page() -> None:
     if len(available_timestamps) > 0:
         # Calculate hours from now for better labels
         now = pd.Timestamp.utcnow().floor("h").replace(tzinfo=None)
-        hours_ahead = [
-            (ts - now).total_seconds() / 3600 for ts in available_timestamps
-        ]
+        hours_ahead = [(ts - now).total_seconds() / 3600 for ts in available_timestamps]
 
         # Create more descriptive slider labels
         def format_time_label(hours: float) -> str:
@@ -315,9 +323,7 @@ def main_page() -> None:
         )
 
         # get generation for selected timestamp
-        selected_generation = all_forecasts_df[
-            all_forecasts_df["timestamp"] == selected_timestamp
-        ]
+        selected_generation = all_forecasts_df[all_forecasts_df["timestamp"] == selected_timestamp]
         selected_generation = selected_generation[["country_code", "power_gw"]]
     else:
         st.error("No forecast data available for the map")
@@ -333,22 +339,26 @@ def main_page() -> None:
 
     shapes_dict = json.loads(world.to_json())
 
-    fig = go.Figure(data=go.Choroplethmap(
-        geojson=shapes_dict,
-        locations=world.index,
-        z=world["power_gw"],
-        colorscale="Viridis",
-        colorbar_title="Power [GW]",
-        marker_opacity=0.5,
-        hovertemplate="<b>%{customdata}</b><br>Power: %{z:.2f} GW<extra></extra>",
-        customdata=world["country_name"] if "country_name" in world.columns else world["adm0_a3"],
-    ))
+    fig = go.Figure(
+        data=go.Choroplethmap(
+            geojson=shapes_dict,
+            locations=world.index,
+            z=world["power_gw"],
+            colorscale="Viridis",
+            colorbar_title="Power [GW]",
+            marker_opacity=0.5,
+            hovertemplate="<b>%{customdata}</b><br>Power: %{z:.2f} GW<extra></extra>",
+            customdata=world["country_name"]
+            if "country_name" in world.columns
+            else world["adm0_a3"],
+        )
+    )
 
     fig.update_layout(
-                mapbox_style="carto-positron",
-                margin={"r": 0, "t": 0, "l": 0, "b": 0},
-                geo_scope="world",
-            )
+        mapbox_style="carto-positron",
+        margin={"r": 0, "t": 0, "l": 0, "b": 0},
+        geo_scope="world",
+    )
 
     clicked_data = st.plotly_chart(fig, on_select="rerun", key="world_map")
 
@@ -366,8 +376,6 @@ def main_page() -> None:
                 st.warning("No forecast data available for the selected country")
 
 
-
-
 def docs_page() -> None:
     """Documentation page."""
     # Display OCF logo in sidebar
@@ -375,8 +383,7 @@ def docs_page() -> None:
 
     st.markdown("# Documentation")
     st.write(
-        "There are two main components to this app, the solar capacities "
-        "and solar forecasts.",
+        "There are two main components to this app, the solar capacities and solar forecasts.",
     )
 
     st.markdown("## Solar Capacities")
@@ -419,8 +426,7 @@ def docs_page() -> None:
         "of the country.",
     )
     st.write(
-        "5. The forecast right now is quite spiky, "
-        "we are looking into smoothing it out a bit.",
+        "5. The forecast right now is quite spiky, we are looking into smoothing it out a bit.",
     )
 
     faqs = Path("./FAQ.md").read_text()
@@ -435,7 +441,8 @@ def capacities_page() -> None:
     st.header("Solar Capacities")
     st.write("This page shows the solar capacities per country.")
     solar_capacity_per_country_df = pd.read_csv(
-        f"{data_dir}/solar_capacities.csv", index_col=0,
+        f"{data_dir}/solar_capacities.csv",
+        index_col=0,
     )
 
     # remove nans in index
@@ -449,10 +456,13 @@ def capacities_page() -> None:
 if __name__ == "__main__":
     country_page_ref = st.Page(country_page, title="Country")
 
-    pg = st.navigation([
-        st.Page(main_page, title="Global", default=True),
-        country_page_ref,
-        st.Page(docs_page, title="About"),
-        st.Page(capacities_page, title="Capacities"),
-    ], position="top")
+    pg = st.navigation(
+        [
+            st.Page(main_page, title="Global", default=True),
+            country_page_ref,
+            st.Page(docs_page, title="About"),
+            st.Page(capacities_page, title="Capacities"),
+        ],
+        position="top",
+    )
     pg.run()
