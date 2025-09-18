@@ -105,17 +105,39 @@ def main_page() -> None:
     all_forecasts_df = all_forecasts_df.reset_index()
 
     # plot the total amount forecasted
+    # we want to do a stacked chart, where we display the top 10 countries, and then all the others
+    highest_capacity_countries = pd.DataFrame(solar_capacity_per_country.items(), 
+                                              columns=["country_code","capacity_gw"])
+    highest_capacity_countries = highest_capacity_countries.sort_values(by="capacity_gw")[::-1]
+    highest_capacity_countries.set_index("country_code",inplace=True)
+    N=10
+    highest_capacity_countries = highest_capacity_countries.index[0:N]
     # group by country code and timestamp
-    total_forecast = all_forecasts_df[["timestamp", "power_gw"]]
+    other_countries_forecast = all_forecasts_df[~all_forecasts_df["country_code"].isin(highest_capacity_countries)]
+    total_forecast = other_countries_forecast[["timestamp", "power_gw"]]
     total_forecast = total_forecast.groupby(["timestamp"]).sum().reset_index()
 
     # plot in ploty
     st.write(f"Total global solar capacity is {global_solar_capacity:.2f} GW. "
               "Of course this number is always changing so please see the `Capacities` tab "
               "for actual the numbers we have used. ")
-    fig = go.Figure(data=go.Scatter(x=total_forecast["timestamp"],
-                                    y=total_forecast["power_gw"],
-                                    marker_color="#FF4901"))
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=total_forecast["timestamp"],
+                                y=total_forecast["power_gw"],
+                                marker_color="#FF4901", 
+                                fill='tozeroy',
+                                name='All other countries',stackgroup='one'))
+    for country_code in highest_capacity_countries[::-1]:
+        forecast_one_country = all_forecasts_df[all_forecasts_df["country_code"] == country_code]
+        print(forecast_one_country[["power_gw","timestamp"]])
+        # forecast_one_country["power_gw"] += total_forecast["power_gw"]
+        print(forecast_one_country[["power_gw","timestamp"]])
+        fig.add_trace(go.Scatter(x=forecast_one_country["timestamp"],
+                                    y=forecast_one_country["power_gw"],
+                                    # marker_color="#FF4901",
+                                    name=country_code,
+                                    fill='tonexty',
+                                    stackgroup='one'))
     fig.update_layout(
         yaxis_title="Power [GW]",
         xaxis_title="Time (UTC)",
