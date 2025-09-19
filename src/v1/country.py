@@ -1,4 +1,5 @@
 """A Streamlit app to show global solar forecast."""
+
 import warnings
 from zoneinfo import ZoneInfo
 
@@ -17,9 +18,19 @@ def get_country_timezone(country_name: str) -> str:
     """Get timezone for a country based on its name using pycountry and pytz."""
     # Handle regional/organizational groupings that aren't countries
     non_countries = {
-        "Africa", "ASEAN", "Asia", "EU", "Europe", "G20", "G7",
-        "Latin America and Caribbean", "Middle East", "North America",
-        "Oceania", "OECD", "World",
+        "Africa",
+        "ASEAN",
+        "Asia",
+        "EU",
+        "Europe",
+        "G20",
+        "G7",
+        "Latin America and Caribbean",
+        "Middle East",
+        "North America",
+        "Oceania",
+        "OECD",
+        "World",
     }
     if country_name in non_countries:
         return "UTC"
@@ -44,18 +55,18 @@ def get_country_timezone(country_name: str) -> str:
 
         if country_timezones:
             preferred_timezones = {
-                "US": "America/New_York",      # Eastern Time (most populated)
-                "RU": "Europe/Moscow",         # Moscow Time
-                "AU": "Australia/Sydney",      # Eastern Australia
-                "BR": "America/Sao_Paulo",    # Brasília Time (most populated)
-                "CA": "America/Toronto",       # Eastern Canada
-                "MX": "America/Mexico_City",   # Central Mexico
+                "US": "America/New_York",  # Eastern Time (most populated)
+                "RU": "Europe/Moscow",  # Moscow Time
+                "AU": "Australia/Sydney",  # Eastern Australia
+                "BR": "America/Sao_Paulo",  # Brasília Time (most populated)
+                "CA": "America/Toronto",  # Eastern Canada
+                "MX": "America/Mexico_City",  # Central Mexico
                 "AR": "America/Argentina/Buenos_Aires",  # Argentina
-                "CL": "America/Santiago",      # Chile
-                "KZ": "Asia/Almaty",          # Kazakhstan
-                "MN": "Asia/Ulaanbaatar",     # Mongolia
-                "CD": "Africa/Kinshasa",      # DRC
-                "ID": "Asia/Jakarta",         # Indonesia
+                "CL": "America/Santiago",  # Chile
+                "KZ": "Asia/Almaty",  # Kazakhstan
+                "MN": "Asia/Ulaanbaatar",  # Mongolia
+                "CD": "Africa/Kinshasa",  # DRC
+                "ID": "Asia/Jakarta",  # Indonesia
             }
 
             return preferred_timezones.get(country.alpha_2, country_timezones[0])
@@ -101,7 +112,8 @@ def country_page() -> None:
 
     # Get list of countries and their solar capcities now from the Ember API
     solar_capacity_per_country_df = pd.read_csv(
-        f"{data_dir}/solar_capacities.csv", index_col=0,
+        f"{data_dir}/solar_capacities.csv",
+        index_col=0,
     )
 
     # remove nans in index
@@ -110,14 +122,11 @@ def country_page() -> None:
 
     # add column with country code and name
     solar_capacity_per_country_df["country_code_and_name"] = (
-        solar_capacity_per_country_df.index + " - " +
-        solar_capacity_per_country_df["country_name"]
+        solar_capacity_per_country_df.index + " - " + solar_capacity_per_country_df["country_name"]
     )
 
     # convert to dict
-    solar_capacity_per_country = solar_capacity_per_country_df.to_dict()[
-        "capacity_gw"
-    ]
+    solar_capacity_per_country = solar_capacity_per_country_df.to_dict()["capacity_gw"]
     country_code_and_names = list(
         solar_capacity_per_country_df["country_code_and_name"],
     )
@@ -133,7 +142,9 @@ def country_page() -> None:
         del st.session_state.selected_country_code
 
     selected_country = st.selectbox(
-        "Select a country:", country_code_and_names, index=default_index,
+        "Select a country:",
+        country_code_and_names,
+        index=default_index,
     )
     selected_country_code = selected_country.split(" - ")[0]
 
@@ -169,11 +180,13 @@ def country_page() -> None:
 
     # plot in ploty
     st.write(f"{country.name} Solar Forecast, capacity of {capacity} GW.")
-    fig = go.Figure(data=go.Scatter(
-        x=forecast.index,
-        y=forecast["power_gw"],
-        marker_color="#FF4901",
-    ))
+    fig = go.Figure(
+        data=go.Scatter(
+            x=forecast.index,
+            y=forecast["power_gw"],
+            marker_color="#FF4901",
+        ),
+    )
     fig.update_layout(
         yaxis_title="Power [GW]",
         xaxis_title="Local Time",

@@ -1,4 +1,5 @@
 """A Streamlit app to show global solar forecast."""
+
 import json
 import warnings
 from pathlib import Path
@@ -16,19 +17,36 @@ data_dir = "src/v1/data"
 
 def main_page() -> None:
     """Main page, show a map of the world with the solar forecast."""
-    st.header("Open Quartz Global Solar Forecast")
-    st.write("This application provides a global forecast of solar power generation "
-    "for then next 48 hours. " \
-    "We have modelled each countries solar generation seperately, " \
-    "using [open quartz solar](https://open.quartz.solar/), "
-    "which uses live weather data.")
+    # Add title with logo beside it
+    cols = st.columns([0.85, 0.15])
+    with cols[0]:
+        st.header("Global Solar Forecast")
+    with cols[1]:
+        logo_path = "src/assets/ocf_logo_dark_square.png"
+        if Path(logo_path).exists():
+            st.markdown(
+                f'<a href="https://www.openclimatefix.org" target="_blank">'
+                f'<img src="data:image/png;base64,{get_image_base64(logo_path)}" '
+                f'style="width: 100%; height: auto; display: block;" />'
+                f'</a>',
+                unsafe_allow_html=True,
+            )
+
+    st.write(
+        "This application provides a global forecast of solar power generation "
+        "for then next 48 hours. "
+        "We have modelled each countries solar generation seperately, "
+        "using [open quartz solar](https://open.quartz.solar/), "
+        "which uses live weather data.",
+    )
 
     # Lets load a map of the world
     world = gpd.read_file(f"{data_dir}/countries.geojson")
 
-    # Get list of countries and their solar capcities now from the Ember API
+    # Get list of countries and their solar capacities now from the Ember API
     solar_capacity_per_country_df = pd.read_csv(
-        f"{data_dir}/solar_capacities.csv", index_col=0,
+        f"{data_dir}/solar_capacities.csv",
+        index_col=0,
     )
 
     # remove nans in index
@@ -37,28 +55,24 @@ def main_page() -> None:
 
     # add column with country code and name
     solar_capacity_per_country_df["country_code_and_name"] = (
-        solar_capacity_per_country_df.index + " - " +
-        solar_capacity_per_country_df["country_name"]
+        solar_capacity_per_country_df.index + " - " + solar_capacity_per_country_df["country_name"]
     )
 
     # convert to dict
-    solar_capacity_per_country = solar_capacity_per_country_df.to_dict()[
-        "capacity_gw"
-    ]
+    solar_capacity_per_country = solar_capacity_per_country_df.to_dict()["capacity_gw"]
     global_solar_capacity = solar_capacity_per_country_df["capacity_gw"].sum()
 
-    # drop down menu in side bar
-
-
-    # run forecast for that countries
+    # run forecast for each country
     forecast_per_country: dict[str, pd.DataFrame] = {}
     my_bar = st.progress(0)
     countries = list(pycountry.countries)
     for i in range(len(countries)):
-        my_bar.progress(int(i/len(countries)*100),
-                        f"Loading Solar forecast for {countries[i].name} \
-                        ({countries[i].alpha_3}) \
-                        ({i+1}/{len(countries)})")
+        my_bar.progress(
+            int(i / len(countries) * 100),
+            f"Loading Solar forecast for {countries[i].name} "
+            f"({countries[i].alpha_3}) "
+            f"({i + 1}/{len(countries)})",
+        )
         country = countries[i]
 
         if country.alpha_3 not in solar_capacity_per_country:
@@ -69,7 +83,6 @@ def main_page() -> None:
             continue
 
         # get centroid of country
-        # hide warning about GeoSeries.to_crs
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore")
             centroid = country_map.geometry.to_crs(crs="EPSG:4326").centroid
@@ -83,39 +96,36 @@ def main_page() -> None:
         if forecast_data is not None:
             forecast = pd.DataFrame(forecast_data)
             forecast = forecast.rename(columns={"power_kw": "power_gw"})
-
-            # display normalized forecast
             forecast["power_percentage"] = forecast["power_gw"] / capacity * 100
-
             forecast_per_country[country.alpha_3] = forecast
 
     my_bar.progress(100, "Loaded all forecasts.")
     my_bar.empty()
 
-    # format forecast into pandas dataframe with columns,
-    # country code, timestamp, forecast_value
+    # format forecast into pandas dataframe
     all_forecasts: list[pd.DataFrame] = []
     for country_code, forecast in forecast_per_country.items():
         forecast["country_code"] = country_code
         all_forecasts.append(forecast)
 
-    # concatenate all forecasts into a single dataframe
     all_forecasts_df = pd.concat(all_forecasts, ignore_index=False)
     all_forecasts_df.index.name = "timestamp"
     all_forecasts_df = all_forecasts_df.reset_index()
 
     # plot the total amount forecasted
-    # group by country code and timestamp
     total_forecast = all_forecasts_df[["timestamp", "power_gw"]]
     total_forecast = total_forecast.groupby(["timestamp"]).sum().reset_index()
 
-    # plot in ploty
-    st.write(f"Total global solar capacity is {global_solar_capacity:.2f} GW. "
-              "Of course this number is always changing so please see the `Capacities` tab "
-              "for actual the numbers we have used. ")
-    fig = go.Figure(data=go.Scatter(x=total_forecast["timestamp"],
-                                    y=total_forecast["power_gw"],
-                                    marker_color="#FF4901"))
+    st.write(
+        f"Total global solar capacity is {global_solar_capacity:.2f} GW. "
+        "Of course this number is always changing so please see the `Capacities` tab "
+        "for actual the numbers we have used. ",
+    )
+    fig = go.Figure(
+        data=go.Scatter(
+            x=total_forecast["timestamp"], y=total_forecast["power_gw"], marker_color="#FF4901",
+        ),
+    )
     fig.update_layout(
         yaxis_title="Power [GW]",
         xaxis_title="Time (UTC)",
@@ -123,26 +133,18 @@ def main_page() -> None:
         title="Global Solar Power Forecast",
     )
     st.plotly_chart(fig)
-    # now lets make a map plot, of the generation for different forecast
-    # horizons
-    # get available timestamps for the slider
+
+    # forecast map
     all_forecasts_df["timestamp"] = pd.to_datetime(all_forecasts_df["timestamp"])
     available_timestamps = sorted(all_forecasts_df["timestamp"].unique())
-    # add slider to select forecast horizon
+
     st.subheader("Solar Forecast Map")
-    st.write(
-        "Use the slider below to view forecasts for different time horizons:",
-    )
+    st.write("Use the slider below to view forecasts for different time horizons:")
 
-    # create slider with timestamp options
     if len(available_timestamps) > 0:
-        # Calculate hours from now for better labels
         now = pd.Timestamp.utcnow().floor("h").replace(tzinfo=None)
-        hours_ahead = [
-            (ts - now).total_seconds() / 3600 for ts in available_timestamps
-        ]
+        hours_ahead = [(ts - now).total_seconds() / 3600 for ts in available_timestamps]
 
-        # Create more descriptive slider labels
         def format_time_label(hours: float) -> str:
             if hours <= 0:
                 return "Now"
@@ -170,20 +172,21 @@ def main_page() -> None:
             f"{selected_timestamp.strftime('%Y-%m-%d %H:%M')} UTC",
         )
 
-        # get generation for selected timestamp
         selected_generation = all_forecasts_df[
             all_forecasts_df["timestamp"] == selected_timestamp
         ]
-        selected_generation = selected_generation[["country_code", "power_gw", "power_percentage"]]
+        selected_generation = selected_generation[
+            ["country_code", "power_gw", "power_percentage"]
+        ]
     else:
         st.error("No forecast data available for the map")
         return
 
     normalized = st.checkbox(
-        "Normalised each countries solar forecast (0-100%)", value=False,
+        "Normalised each countries solar forecast (0-100%)",
+        value=False,
     )
 
-    # join 'world' and 'selected_generation'
     world = world.merge(
         selected_generation,
         how="left",
@@ -193,29 +196,27 @@ def main_page() -> None:
 
     shapes_dict = json.loads(world.to_json())
 
-    fig = go.Figure(data=go.Choroplethmap(
-        geojson=shapes_dict,
-        locations=world.index,
-        z=world["power_percentage" if normalized else "power_gw"],
-        colorscale="Viridis",
-        colorbar_title="Power [%]" if normalized else "Power [GW]",
+    fig = go.Figure(
+        data=go.Choroplethmap(
+            geojson=shapes_dict,
+            locations=world.index,
+            z=world["power_percentage" if normalized else "power_gw"],
+            colorscale="Viridis",
+            colorbar_title="Power [%]" if normalized else "Power [GW]",
             marker_opacity=0.5,
-            hovertemplate=(
-                "<b>%{customdata}</b><br>Power: %{z:.2f} %<extra></extra>"
-                if normalized
-                else "<b>%{customdata}</b><br>Power: %{z:.2f} GW<extra></extra>"
-            ),
-            customdata=(
-                world["country_name"] if "country_name" in world.columns
-                else world["adm0_a3"]
-            ),
-    ))
+            hovertemplate="<b>%{customdata}</b><br>Power: %{z:.2f} GW<extra></extra>",
+            customdata=world["country_name"]
+            if "country_name" in world.columns
+            else world["adm0_a3"],
+        ),
+    )
+
 
     fig.update_layout(
-                mapbox_style="carto-positron",
-                margin={"r": 0, "t": 0, "l": 0, "b": 0},
-                geo_scope="world",
-            )
+        mapbox_style="carto-positron",
+        margin={"r": 0, "t": 0, "l": 0, "b": 0},
+        geo_scope="world",
+    )
 
     clicked_data = st.plotly_chart(fig, on_select="rerun", key="world_map")
 
@@ -233,22 +234,23 @@ def main_page() -> None:
                 st.warning("No forecast data available for the selected country")
 
 
+def get_image_base64(image_path: str) -> str:
+    """Convert image to base64 string for embedding in HTML."""
+    import base64
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
 
 
 def docs_page() -> None:
     """Documentation page."""
     st.markdown("# Documentation")
-    st.write(
-        "There are two main components to this app, the solar capacities "
-        "and solar forecasts.",
-    )
+    st.write("There are two main components to this app, the solar capacities and solar forecasts.")
 
     st.markdown("## Solar Capacities")
     st.write(
         "Most of the solar capacities are taken from the "
         "[Ember](https://ember-energy.org/data/electricity-data-explorer/). "
-        "This data is updated yearly and shows the total installed "
-        "solar capacity "
+        "This data is updated yearly and shows the total installed solar capacity "
         "per country in Gigawatts (GW). "
         "Some countries are missing from the Ember dataset, "
         "so we have manually added some countries from other sources.",
@@ -265,27 +267,12 @@ def docs_page() -> None:
 
     st.markdown("## Caveats")
     st.write(
-        "1. The solar capacities are yearly totals, "
-        "so they do not account for new installations that year.",
+        "1. The solar capacities are yearly totals, so they do not account for new installations.",
     )
-    st.write(
-        "2. Some countries solar capacies are very well known, some are not.",
-    )
-    st.write(
-        "3. The Quartz Open Solar API uses a ML model trained on UK "
-        "domestic solar data. "
-        "It's an unknown how well this model performs in other countries.",
-    )
-    st.write(
-        "4. We use the centroid of each country as the location for "
-        "the forecast, "
-        "but the solar capacity may be concentrated in a different area "
-        "of the country.",
-    )
-    st.write(
-        "5. The forecast right now is quite spiky, "
-        "we are looking into smoothing it out a bit.",
-    )
+    st.write("2. Some countries solar capacities are very well known, some are not.")
+    st.write("3. The Quartz Open Solar API uses a ML model trained on UK solar data.")
+    st.write("4. We use the centroid of each country as the forecast location.")
+    st.write("5. The forecast right now is quite spiky; we are looking into smoothing it.")
 
     faqs = Path("./FAQ.md").read_text()
     st.markdown(faqs)
@@ -296,10 +283,9 @@ def capacities_page() -> None:
     st.header("Solar Capacities")
     st.write("This page shows the solar capacities per country.")
     solar_capacity_per_country_df = pd.read_csv(
-        f"{data_dir}/solar_capacities.csv", index_col=0,
+        f"{data_dir}/solar_capacities.csv",
+        index_col=0,
     )
-
-    # remove nans in index
     solar_capacity_per_country_df["temp"] = solar_capacity_per_country_df.index
     solar_capacity_per_country_df.dropna(subset=["temp"], inplace=True)
     solar_capacity_per_country_df.drop(columns=["temp"], inplace=True)
@@ -308,12 +294,30 @@ def capacities_page() -> None:
 
 
 if __name__ == "__main__":
+    # Compact header styling
+    st.markdown(
+        """
+        <style>
+            [data-testid="stHeader"] {
+                height: 60px !important;
+                min-height: 60px !important;
+                padding: 0 1rem !important;
+                border-bottom: 1px solid rgba(0,0,0,0.1);
+            }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
     country_page_ref = st.Page(country_page, title="Country")
 
-    pg = st.navigation([
-        st.Page(main_page, title="Global", default=True),
-        country_page_ref,
-        st.Page(docs_page, title="About"),
-        st.Page(capacities_page, title="Capacities"),
-    ], position="top")
+    pg = st.navigation(
+        [
+            st.Page(main_page, title="Global", default=True),
+            country_page_ref,
+            st.Page(docs_page, title="About"),
+            st.Page(capacities_page, title="Capacities"),
+        ],
+        position="top",
+    )
     pg.run()
