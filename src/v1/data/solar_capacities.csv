@@ -41,7 +41,6 @@ KAZ,1.2,Kazakhstan,Ember
 KEN,0.37,Kenya,Ember
 XKX,0.02,Kosovo,Ember
 KWT,0.1,Kuwait,Ember
-KGZ,0.0,Kyrgyzstan,Ember
 LVA,0.47,Latvia,Ember
 LTU,2.57,Lithuania,Ember
 LUX,0.52,Luxembourg,Ember
@@ -80,7 +79,6 @@ LKA,1.45,Sri Lanka,Ember
 SWE,4.96,Sweden,Ember
 CHE,7.79,Switzerland,Ember
 TWN,14.28,Taiwan,Ember
-TJK,0.0,Tajikistan,Ember
 THA,3.38,Thailand,Ember
 TUN,0.77,Tunisia,Ember
 TUR,19.88,Turkey,Ember
@@ -91,7 +89,9 @@ URY,0.33,Uruguay,Ember
 VNM,18.67,Viet Nam,Ember
 ,1865.49,World,Ember
 UKR,1.2,Ukraine,Wikipedia - https://en.wikipedia.org/wiki/Solar_power_by_country
-TKM,0.0,Turkmenistan,The Global Economy - https://www.theglobaleconomy.com/
+TJK,0.0006,Tajikistan,CABAR.asia 2024 (600 kW USAID project) - https://cabar.asia/en/tajikistan-solar-energy-in-support-of-hydropower-plants
+TKM,0.005,Turkmenistan,The Global Economy - https://www.theglobaleconomy.com/
+KGZ,8e-05,Kyrgyzstan,Wikipedia - https://en.wikipedia.org/wiki/Solar_power_by_country
 DZA,0.46,Algeria,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
 SEN,0.23,Senegal,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
 AGO,0.31,Angola,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
@@ -117,7 +117,7 @@ MWI,0.03,Malawi,https://www.ren21.net/gsr-2025/downloads/pdf/go/GSR_2025_GO_2025
 STP,0.005,Sao Tome and Principe,https://www.ren21.net/gsr-2025/downloads/pdf/go/GSR_2025_GO_2025_Full_Report.pdf
 SLE,0.02,Sierra Leone,https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/
 SOM,0.02,Somalia,https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/
-SSD,0.01,South Sudan,https://www.ren21.net/gsr-2025/downloads/pdf/go/GSR_2025_GO_2025_Full_Report.pdf
+SSD,0.0384,South Sudan,https://www.ren21.net/gsr-2025/downloads/pdf/go/GSR_2025_GO_2025_Full_Report.pdf
 SYC,0.01,Seychelles,https://ember-energy.org/latest-insights/global-electricity-review-2025/
 TCD,0.02,Chad,https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/
 ALB,0.21,Albania,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
@@ -195,6 +195,8 @@ GUM,0.1,Guam,Our World in Data - https://ourworldindata.org/grapher/installed-so
 TKL,0.001,Tokelau,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
 PRY,0.001,Paraguay,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
 SUR,0.01,Suriname,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
+VEN,0.004,Venezuela,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
+GUY,0.018,Guyana,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
 BLZ,0.007,Belize,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
 NIC,0.035,Nicaragua,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
 AND,0.009,Andorra,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity

@@ -38,10 +38,20 @@ manual_countries = {
         "capacity_gw": 1.2,
         "source": ("Wikipedia - https://en.wikipedia.org/wiki/Solar_power_by_country"),
     },
+    "TJK": {
+        "country_name": "Tajikistan",
+        "capacity_gw": 0.0006,
+        "source": ("CABAR.asia 2024 (600 kW USAID project) - https://cabar.asia/en/tajikistan-solar-energy-in-support-of-hydropower-plants"),
+    },
     "TKM": {
         "country_name": "Turkmenistan",
-        "capacity_gw": 0.0,
+        "capacity_gw": 0.005,
         "source": ("The Global Economy - https://www.theglobaleconomy.com/"),
+    },
+    "KGZ": {
+        "country_name": "Kyrgyzstan",
+        "capacity_gw": 0.00008,
+        "source": ("Wikipedia - https://en.wikipedia.org/wiki/Solar_power_by_country"),
     },
     "DZA": {
         "country_name": "Algeria",
@@ -176,8 +186,8 @@ manual_countries = {
     },
     "SSD": {
         "country_name": "South Sudan",
-        "capacity_gw": 0.01,
-        "source": "https://www.ren21.net/gsr-2025/downloads/pdf/go/GSR_2025_GO_2025_Full_Report.pdf",
+        "capacity_gw": 0.0384,
+        "source": ("https://www.ren21.net/gsr-2025/downloads/pdf/go/GSR_2025_GO_2025_Full_Report.pdf"),
     },
     "SYC": {
         "country_name": "Seychelles",
@@ -641,6 +651,16 @@ manual_countries = {
     "SUR": {
         "country_name": "Suriname",
         "capacity_gw": 0.01,
+        "source": "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity",
+    },
+    "VEN": {
+        "country_name": "Venezuela",
+        "capacity_gw": 0.004,
+        "source": "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity",
+    },
+    "GUY": {
+        "country_name": "Guyana",
+        "capacity_gw": 0.018,
         "source": "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity",
     },
 
