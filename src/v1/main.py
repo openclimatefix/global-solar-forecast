@@ -9,6 +9,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import pycountry
 import streamlit as st
+from constants import ocf_palette
 from country import country_page
 from forecast import get_forecast
 
@@ -91,12 +92,29 @@ def main_page() -> None:
         lon = centroid.x.values[0]
 
         capacity = solar_capacity_per_country[country.alpha_3]
+        if capacity == 0.0:
+            continue
         forecast_data = get_forecast(country.name, capacity, lat, lon)
 
         if forecast_data is not None:
             forecast = pd.DataFrame(forecast_data)
-            forecast = forecast.rename(columns={"power_kw": "power_gw"})
-            forecast["power_percentage"] = forecast["power_gw"] / capacity * 100
+            # Ensure timestamp column is parsed and timezone-aware (UTC)
+            if "timestamp" in forecast.columns:
+                forecast["timestamp"] = pd.to_datetime(forecast["timestamp"], utc=True)
+                forecast = forecast.set_index("timestamp").sort_index()
+
+            # Convert units explicitly: API returns kW (power_kw) -> convert to GW
+            if "power_kw" in forecast.columns:
+                forecast["power_gw"] = forecast["power_kw"].astype(float) / 1_000_000.0
+            elif "power_gw" not in forecast.columns:
+                # unexpected format; skip this country
+                continue
+
+            if capacity == 0.0:
+                forecast["power_percentage"] = None
+            else:
+                forecast["power_percentage"] = forecast["power_gw"] / float(capacity) * 100
+
             forecast_per_country[country.alpha_3] = forecast
 
     my_bar.progress(100, "Loaded all forecasts.")
@@ -112,7 +130,7 @@ def main_page() -> None:
     all_forecasts_df.index.name = "timestamp"
     all_forecasts_df = all_forecasts_df.reset_index()
 
-    # plot the total amount forecasted
+    # plot the total amount forecasted and stacked chart option
     total_forecast = all_forecasts_df[["timestamp", "power_gw"]]
     total_forecast = total_forecast.groupby(["timestamp"]).sum().reset_index()
 
@@ -121,18 +139,65 @@ def main_page() -> None:
         "Of course this number is always changing so please see the `Capacities` tab "
         "for actual the numbers we have used. ",
     )
-    fig = go.Figure(
-        data=go.Scatter(
-            x=total_forecast["timestamp"], y=total_forecast["power_gw"], marker_color="#FF4901",
-        ),
-    )
-    fig.update_layout(
-        yaxis_title="Power [GW]",
-        xaxis_title="Time (UTC)",
-        yaxis_range=[0, None],
-        title="Global Solar Power Forecast",
-    )
-    st.plotly_chart(fig)
+    # Toggle to show stacked chart (top N countries + Other)
+    show_stacked = st.checkbox("Show stacked global chart (top 20 countries)", value=False)
+
+    if not show_stacked:
+        fig = go.Figure(
+            data=go.Scatter(
+                x=total_forecast["timestamp"],
+                y=total_forecast["power_gw"],
+                marker_color="#FF4901",
+            ),
+        )
+        fig.update_layout(
+            yaxis_title="Power [GW]",
+            xaxis_title="Time (UTC)",
+            yaxis_range=[0, None],
+            title="Global Solar Power Forecast",
+        )
+        st.plotly_chart(fig)
+    else:
+        # Prepare stacked data: pivot per country
+        pivot = all_forecasts_df.pivot_table(
+            index="timestamp",
+            columns="country_code",
+            values="power_gw",
+            aggfunc="sum",
+        ).fillna(0)
+
+        # pick top N countries by peak contribution
+        top_n = 20
+        country_sums = pivot.sum().sort_values(ascending=False)
+        top_countries = list(country_sums.head(top_n).index)
+        other_countries = [c for c in pivot.columns if c not in top_countries]
+
+        stacked_df = pivot[top_countries].copy()
+        if other_countries:
+            stacked_df["Other"] = pivot[other_countries].sum(axis=1)
+
+        fig = go.Figure()
+        cols = list(stacked_df.columns)  # type: ignore[arg-type]
+        for i, col in enumerate(cols):
+            color = ocf_palette[i % len(ocf_palette)]
+            fig.add_trace(
+                go.Scatter(
+                    x=stacked_df.index,
+                    y=stacked_df[col],
+                    mode="lines",
+                    name=col,
+                    stackgroup="one",
+                    line={"width": 0.5, "color": color},
+                ),
+            )
+
+        fig.update_layout(
+            yaxis_title="Power [GW]",
+            xaxis_title="Time (UTC)",
+            yaxis_range=[0, None],
+            legend={"orientation": "h", "yanchor": "bottom", "y": 1.02, "xanchor": "right", "x": 1},
+        )
+        st.plotly_chart(fig)
 
     # forecast map
     all_forecasts_df["timestamp"] = pd.to_datetime(all_forecasts_df["timestamp"])
