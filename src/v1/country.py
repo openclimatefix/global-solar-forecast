@@ -17,7 +17,8 @@ data_dir = "src/v1/data"
 WORLD = gpd.read_file(f"{data_dir}/countries.geojson").to_crs(crs="EPSG:4326")
 
 # Pre-compute centroids for all countries
-CENTROIDS = WORLD.set_index("adm0_a3").geometry.centroid.to_frame(name="geometry")
+WORLD_PROJECTED = WORLD.to_crs("EPSG:3857")  # or EPSG:6933 for equal-area
+CENTROIDS = WORLD_PROJECTED.geometry.centroid.to_crs("EPSG:4326").to_frame(name="geometry")
 CENTROIDS["lat"] = CENTROIDS.geometry.y
 CENTROIDS["lon"] = CENTROIDS.geometry.x
 
@@ -102,7 +103,6 @@ def get_country_coords(country_code: str) -> tuple[float, float]:
 
     # Fallback manual coordinates for very small states not in geojson
     fallback_coords = {
-        # Existing ones
         "HKG": (22.3193, 114.1694),
         "SGP": (1.3521, 103.8198),
         "MAC": (22.1987, 113.5439),
@@ -144,6 +144,15 @@ def get_country_coords(country_code: str) -> tuple[float, float]:
         "GNB": (11.8037, -15.1804),  # Guinea-Bissau
         "SWZ": (-26.5225, 31.4659),  # Eswatini
         "LSO": (-29.6099, 28.2336),  # Lesotho
+        "ATA": (-82.8628, 135.0000), # Antarctica
+        "ATF": (-49.2800, 69.3500),  # French Southern and Antarctic Lands
+        "FLK": (-51.7963, -59.5236), # Falkland Islands
+        "GRL": (71.7069, -42.6043),  # Greenland
+        "KOS": (42.6026, 20.9030),   # Kosovo
+        "NCL": (-21.5511, 165.6180), # New Caledonia
+        # "CYN": (35.1856, 33.3823),   # Northern Cyprus 
+        # "SAH": (24.2155, -12.8858),  # Western Sahara
+        # "SOL": (8.4606, 46.5462),    # Somaliland
     }
     # warnings.warn(f"Country code {country_code} not found in geojson, using fallback coordinates if available.")
     return fallback_coords.get(country_code, (0, 0))

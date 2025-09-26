@@ -674,11 +674,6 @@ manual_countries = {
         "capacity_gw": 0.185,
         "source": "World Population Review 2025 - https://worldpopulationreview.com/country-rankings/solar-power-by-country",
     },
-    "PSX": {
-        "country_name": "Palestine",
-        "capacity_gw": 0.192,
-        "source": "World Population Review 2025 - https://worldpopulationreview.com/country-rankings/solar-power-by-country",
-    },
     "SAH": {
         "country_name": "Western Sahara",
         "capacity_gw": 0.1,
