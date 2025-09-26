@@ -148,11 +148,17 @@ def get_country_coords(country_code: str) -> tuple[float, float]:
         "ATF": (-49.2800, 69.3500),  # French Southern and Antarctic Lands
         "FLK": (-51.7963, -59.5236), # Falkland Islands
         "GRL": (71.7069, -42.6043),  # Greenland
-        "KOS": (42.6026, 20.9030),   # Kosovo
         "NCL": (-21.5511, 165.6180), # New Caledonia
+        "COK": (-21.2367, -159.7777), # Cook Islands
+        "NIU": (-19.0544, -169.8672), # Niue
+        "PFY": (-17.6797, -149.4068), # French Polynesia
+        "ASM": (-14.2706, -170.1322), # American Samoa
+        "GUM": (13.4443, 144.7937),  # Guam
+        "TKL": (-9.2002, -171.8480), # Tokelau
         # "CYN": (35.1856, 33.3823),   # Northern Cyprus 
         # "SAH": (24.2155, -12.8858),  # Western Sahara
         # "SOL": (8.4606, 46.5462),    # Somaliland
+        # "KOS": (42.6026, 20.9030),   # Kosovo
     }
     # warnings.warn(f"Country code {country_code} not found in geojson, using fallback coordinates if available.")
     return fallback_coords.get(country_code, (0, 0))

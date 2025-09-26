@@ -601,6 +601,36 @@ manual_countries = {
         "capacity_gw": 0.003,
         "source": "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity",
     },
+    "COK": {
+        "country_name": "Cook Islands",
+        "capacity_gw": 0.0055,
+        "source": "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity",
+    },
+    "PFY": {
+        "country_name": "French Polynesia",
+        "capacity_gw": 0.07,
+        "source": "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity",
+    },
+    "NIU": {
+        "country_name": "Niue",
+        "capacity_gw": 0.0018,
+        "source": "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity",
+    },
+    "ASM": {
+        "country_name": "American Samoa",
+        "capacity_gw": 0.007,
+        "source": "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity",
+    },
+    "GUM": {
+        "country_name": "Guam",
+        "capacity_gw": 0.10,
+        "source": "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity",
+    },
+    "TKL": {
+        "country_name": "Tokelau",
+        "capacity_gw": 0.001,
+        "source": "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity",
+    },
 
     # ---------------- South America ----------------
     "PRY": {
@@ -649,11 +679,6 @@ manual_countries = {
         "capacity_gw": 0.0032,
         "source": "green-overseas.org & TAAF renewable energy installations - http://www.green-overseas.org/en/pays-et-territoires/french-southern-and-antarctic-lands",
     },
-    "CYN": {
-        "country_name": "Northern Cyprus",
-        "capacity_gw": 0.0013,
-        "source": "Research studies ETASR 2023 & ProLuxMax 2025 - https://etasr.com/index.php/ETASR/article/view/5744",
-    },
     "FLK": {
         "country_name": "Falkland Islands",
         "capacity_gw": 0.0034,
@@ -664,56 +689,11 @@ manual_countries = {
         "capacity_gw": 0.001,
         "source": "World Population Review 2025 - https://worldpopulationreview.com/country-rankings/solar-power-by-country",
     },
-    "KOS": {
-        "country_name": "Kosovo",
-        "capacity_gw": 0.15,
-        "source": "PVKnowhow 2024 & KfW Development Bank - https://www.pvknowhow.com/news/kosovo-solar-plant-keks-impressive-100-mw-project-begins/",
-    },
     "NCL": {
         "country_name": "New Caledonia",
         "capacity_gw": 0.185,
         "source": "World Population Review 2025 - https://worldpopulationreview.com/country-rankings/solar-power-by-country",
     },
-    "SAH": {
-        "country_name": "Western Sahara",
-        "capacity_gw": 0.1,
-        "source": "WSRW Report 2024 - https://wsrw.org/en/news/renewable-energy",
-    },
-    "SOL": {
-        "country_name": "Somaliland",
-        "capacity_gw": 0.0337,
-        "source": "Combined projects - https://www.greenbuildingafrica.co.za/somaliland-issues-epc-tender-for-12mw-solar-bess-project-plus-13-5km-33kv-evacuation-line/",
-    },
-    # Very small countries with no data from Ember or Our World in Data
-    # but with some solar capacity according to Wikipedia
-    # "LIE": {
-    #     "country_name": "Liechtenstein",
-    #     "capacity_gw": 0.0025,
-    #     "source": (
-    #         "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity"
-    #     ),
-    # },
-    # "MCO": {
-    #     "country_name": "Monaco",
-    #     "capacity_gw": 0.0015,
-    #     "source": (
-    #         "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity"
-    #     ),
-    # },
-    # "SMR": {
-    #     "country_name": "San Marino",
-    #     "capacity_gw": 0.001,
-    #     "source": (
-    #         "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity"
-    #     ),
-    # },
-    # "VAT": {
-    #     "country_name": "Vatican City",
-    #     "capacity_gw": 0.0001,
-    #     "source": (
-    #         "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity"
-    #     ),
-    # },
 }
 
 manual_countries_df = pd.DataFrame.from_dict(manual_countries, orient="index")
