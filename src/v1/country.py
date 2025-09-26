@@ -25,6 +25,7 @@ CENTROIDS["lon"] = CENTROIDS.geometry.x
 
 def get_country_timezone(country_name: str) -> str:
     """Get timezone for a country based on its name using pycountry and pytz."""
+    # Handle regional/organizational groupings that aren't countries
     non_countries = {
         "Africa", "ASEAN", "Asia", "EU", "Europe", "G20", "G7",
         "Latin America and Caribbean", "Middle East", "North America",
@@ -80,16 +81,21 @@ def get_country_timezone(country_name: str) -> str:
 def convert_utc_to_local_time(forecast_df: pd.DataFrame, timezone_str: str) -> pd.DataFrame:
     """Convert UTC timestamps to local time for a given timezone."""
     forecast_df = forecast_df.copy()
+
+    # Convert index to datetime if it's not already
     if not isinstance(forecast_df.index, pd.DatetimeIndex):
         forecast_df.index = pd.to_datetime(forecast_df.index)
 
+    # Ensure index is UTC
     if forecast_df.index.tz is None:
         forecast_df.index = forecast_df.index.tz_localize("UTC")
 
+    # Convert to local timezone
     try:
         local_tz = ZoneInfo(timezone_str)
         forecast_df.index = forecast_df.index.tz_convert(local_tz)
     except Exception:
+        # If timezone conversion fails, keep as UTC
         st.warning(f"Could not convert to timezone {timezone_str}, using UTC")
 
     return forecast_df
