@@ -105,7 +105,7 @@ def main_page() -> None:
 
             # Convert units explicitly: API returns kW (power_kw) -> convert to GW
             if "power_kw" in forecast.columns:
-                # we dont need to scale the values as the we provide the capacity in GW (it should be in kw)
+                # No scaling needed since capacity is in GW and API returns kW
                 forecast["power_gw"] = forecast["power_kw"].astype(float)
             elif "power_gw" not in forecast.columns:
                 # unexpected format; skip this country
@@ -220,13 +220,20 @@ def main_page() -> None:
                 days = int(hours // 24)
                 return f"+{days} day(s)"
 
-        selected_timestamp_index = st.slider(
-            "Select Forecast Time",
-            min_value=0,
-            max_value=len(available_timestamps) - 1,
-            value=0,
-            format="%d",
+        selected_hours = st.slider(
+            "Select Forecast Time (hours from now)",
+            min_value=0.0,
+            max_value=max(hours_ahead),
+            value=0.0,
+            step=0.25,
+            format="%.1f h",
             help="Move slider to see forecasts at different times",
+        )
+
+        # Find the closest timestamp index to the selected hours
+        selected_timestamp_index = min(
+            range(len(hours_ahead)),
+            key=lambda i: abs(hours_ahead[i] - selected_hours),
         )
 
         selected_timestamp = available_timestamps[selected_timestamp_index]
