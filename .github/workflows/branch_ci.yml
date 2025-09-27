@@ -3,7 +3,7 @@ name: Non-Default Branch Push CI (Python)
 on:  
   push:
     branches-ignore: [ "main" ]
-    paths-ignore: ['README.md']
+    paths-ignore: ["README.md"]
   pull_request:
     types: ["opened", "reopened", "edited"]
     paths-ignore: ["README.md"]
@@ -17,3 +17,29 @@ jobs:
       enable_typechecking: true
       tests_folder: tests
 
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Sync dependencies
+        run: uv sync
+
+      - name: Update solar capacities dataset
+        run: uv run python src/v1/data/get_solar_capacities.py
+
+      - name: Run lint
+        run: uv run flake8 .
+
+      - name: Run tests
+        run: uv run pytest
