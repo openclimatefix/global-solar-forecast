@@ -43,6 +43,14 @@ def main_page() -> None:
 
     # Lets load a map of the world
     world = gpd.read_file(f"{data_dir}/countries.geojson")
+    # Ensure we have a column with ISO A3 country codes
+    possible_cols = ["adm0_a3", "ADM0_A3", "iso_a3", "ISO_A3", "sov_a3", "gu_a3"]
+    iso_col = next((c for c in possible_cols if c in world.columns), None)
+    if iso_col is None:
+        raise KeyError(f"No ISO country code column found. Columns: {world.columns.tolist()}")
+    world = world.rename(columns={iso_col: "adm0_a3"})
+    # Fix known incorrect country codes
+    world["adm0_a3"] = world["adm0_a3"].replace({"SDS": "SSD"})
 
     # Get list of countries and their solar capacities now from the Ember API
     solar_capacity_per_country_df = pd.read_csv(
@@ -105,8 +113,11 @@ def main_page() -> None:
 
             # Convert units explicitly: API returns kW (power_kw) -> convert to GW
             if "power_kw" in forecast.columns:
-                # we dont need to scale the values as the we provide the capacity in GW (it should be in kw)
-                forecast["power_gw"] = forecast["power_kw"].astype(float)
+                # we dont need to scale the values as the we provide the
+                # capacity in GW (it should be in kw)
+                forecast["power_gw"] = forecast["power_kw"].astype(
+                    float,
+                )
             elif "power_gw" not in forecast.columns:
                 # unexpected format; skip this country
                 continue
