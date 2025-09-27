@@ -39,7 +39,7 @@ jobs:
         run: uv run python src/v1/data/get_solar_capacities.py
 
       - name: Run lint
-        run: uv run flake8 .
+        run: uv run ruff check src/
 
       - name: Run tests
         run: uv run pytest
