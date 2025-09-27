@@ -1,4 +1,6 @@
 # OCF Template
+
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -10,7 +12,7 @@
 [![documentation badge](https://img.shields.io/badge/docs-latest-086788)](https://openclimatefix.github.io/global-solar-forecast/)
 [![contributors badge](https://img.shields.io/github/contributors/openclimatefix/global-solar-forecast?color=FFFFFF)](https://github.com/openclimatefix/global-solar-forecast/graphs/contributors)
 
-[![ease of contribution: hard](https://img.shields.io/badge/ease%20of%20contribution:%20hard-bb2629)](https://github.com/openclimatefix#how-easy-is-it-to-get-involved)
+[![ease of contribution: medium](https://img.shields.io/badge/ease%20of%20contribution:%20medium-f4900c)](https://github.com/openclimatefix/ocf-meta-repo?tab=readme-ov-file#how-easy-is-it-to-get-involved)
 
 ⚠️ This project is a working-in-progress
 
