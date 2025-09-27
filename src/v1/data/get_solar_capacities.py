@@ -687,7 +687,7 @@ manual_countries = {
         "capacity_gw": 0.007,
         "source": "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity",
         },
-        
+
     # --- Missing entries identified on 2025-09-26 ---
     "ATA": {
         "country_name": "Antarctica",

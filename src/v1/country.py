@@ -1,6 +1,5 @@
 """Country page module for global solar forecast."""
 
-import warnings
 from zoneinfo import ZoneInfo
 
 import geopandas as gpd
@@ -161,12 +160,7 @@ def get_country_coords(country_code: str) -> tuple[float, float]:
         "ASM": (-14.2706, -170.1322), # American Samoa
         "GUM": (13.4443, 144.7937),  # Guam
         "TKL": (-9.2002, -171.8480), # Tokelau
-        # "CYN": (35.1856, 33.3823),   # Northern Cyprus 
-        # "SAH": (24.2155, -12.8858),  # Western Sahara
-        # "SOL": (8.4606, 46.5462),    # Somaliland
-        # "KOS": (42.6026, 20.9030),   # Kosovo
     }
-    # warnings.warn(f"Country code {country_code} not found in geojson, using fallback coordinates if available.")
     return fallback_coords.get(country_code, (0, 0))
 
 
