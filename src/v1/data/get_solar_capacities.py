@@ -451,7 +451,7 @@ manual_countries = {
         "capacity_gw": 0.003,
         "source": "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity",
     },
-    "SAH": {
+    "ESH": {
         "country_name": "Western Sahara",
         "capacity_gw": 0.1,
         "source": "WSRW Report 2024 - https://wsrw.org/en/news/renewable-energy",
@@ -622,7 +622,7 @@ manual_countries = {
         "capacity_gw": 0.0055,
         "source": "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity",
     },
-    "PFY": {
+    "PYF": {
         "country_name": "French Polynesia",
         "capacity_gw": 0.07,
         "source": "Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity",
