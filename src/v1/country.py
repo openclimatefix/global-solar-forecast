@@ -173,6 +173,7 @@ def get_country_coords(country_code: str) -> tuple[float, float]:
         "ASM": (-14.2706, -170.1322), # American Samoa
         "GUM": (13.4443, 144.7937),  # Guam
         "TKL": (-9.2002, -171.8480), # Tokelau
+        "XKX": (42.6026, 20.9030),  # Kosovo
         "SAH" : (24.2155, -12.8858),  # Western Sahara
     }
     return fallback_coords.get(country_code, (0, 0))
@@ -194,6 +195,12 @@ def country_page() -> None:
     # remove nans in index
     solar_capacity_per_country_df["temp"] = solar_capacity_per_country_df.index
     solar_capacity_per_country_df.dropna(subset=["temp"], inplace=True)
+
+    # Add Kosovo (XKX) manually since it's not in pycountry
+    if "XKX" in solar_capacity_per_country_df.index:
+        from types import SimpleNamespace
+        kosovo = SimpleNamespace(alpha_3="XKX", name="Kosovo")
+        countries.append(kosovo)
 
     # add column with country code and name
     solar_capacity_per_country_df["country_code_and_name"] = (
