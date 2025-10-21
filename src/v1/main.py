@@ -192,22 +192,29 @@ def main_page() -> None:
         cols = list(stacked_df.columns)  # type: ignore[arg-type]
         for i, col in enumerate(cols):
             color = ocf_palette[i % len(ocf_palette)]
-            fig.add_trace(
-                go.Scatter(
-                    x=stacked_df.index,
-                    y=stacked_df[col],
-                    mode="lines",
-                    name=col,
-                    stackgroup="one",
-                    line={"width": 0.5, "color": color},
-                ),
+            # skip traces that are entirely zero to reduce hover clutter
+            if stacked_df[col].sum() == 0:
+                continue
+
+            # build trace with clean hover text: show country code/name first
+            trace = go.Scatter(
+                x=stacked_df.index,
+                y=stacked_df[col],
+                mode="lines",
+                name=col,
+                stackgroup="one",
+                line={"width": 0.5, "color": color},
+                hovertemplate=f"{col}: %{{y:.3f}} GW<br>%{{x|%Y-%m-%d %H:%M}}<extra></extra>",
             )
+            fig.add_trace(trace)
 
         fig.update_layout(
             yaxis_title="Power [GW]",
             xaxis_title="Time (UTC)",
             yaxis_range=[0, None],
             legend={"orientation": "h", "yanchor": "bottom", "y": 1.02, "xanchor": "right", "x": 1},
+            hovermode="x unified",
+            hoverlabel=dict(namelength=20, font=dict(size=12)),
         )
         st.plotly_chart(fig)
 
