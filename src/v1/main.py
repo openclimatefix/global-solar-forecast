@@ -214,7 +214,7 @@ def main_page() -> None:
             yaxis_range=[0, None],
             legend={"orientation": "h", "yanchor": "bottom", "y": 1.02, "xanchor": "right", "x": 1},
             hovermode="x unified",
-            hoverlabel=dict(namelength=20, font=dict(size=12)),
+            hoverlabel={"namelength": 20, "font": {"size": 12}},
         )
         st.plotly_chart(fig)
 
