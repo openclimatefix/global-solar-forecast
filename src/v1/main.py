@@ -276,6 +276,9 @@ def main_page() -> None:
 
     shapes_dict = json.loads(world.to_json())
 
+    # Determine unit for hover template
+    unit = "%" if normalized else "GW"
+
     fig = go.Figure(
         data=go.Choroplethmap(
             geojson=shapes_dict,
@@ -289,7 +292,7 @@ def main_page() -> None:
             ],
             colorbar_title="Power [%]" if normalized else "Power [GW]",
             marker_opacity=0.5,
-            hovertemplate="<b>%{customdata}</b><br>Power: %{z:.2f} GW<extra></extra>",
+            hovertemplate=f"<b>%{{customdata}}</b><br>Power: %{{z:.2f}} {unit}<extra></extra>",
             customdata=world["country_name"]
             if "country_name" in world.columns
             else world["adm0_a3"],
