@@ -1,5 +1,4 @@
 """A Streamlit app to show global solar forecast."""
-
 import json
 import warnings
 from pathlib import Path
@@ -158,6 +157,7 @@ def main_page() -> None:
                 x=total_forecast["timestamp"],
                 y=total_forecast["power_gw"],
                 marker_color=ocf_palette[0],
+        
             ),
         )
         fig.update_layout(
@@ -165,6 +165,7 @@ def main_page() -> None:
             xaxis_title="Time (UTC)",
             yaxis_range=[0, None],
             title="Global Solar Power Forecast",
+            
         )
         st.plotly_chart(fig)
     else:
@@ -206,6 +207,7 @@ def main_page() -> None:
         fig.update_layout(
             yaxis_title="Power [GW]",
             xaxis_title="Time (UTC)",
+            #  projection="mollweide",
             yaxis_range=[0, None],
             legend={"orientation": "h", "yanchor": "bottom", "y": 1.02, "xanchor": "right", "x": 1},
         )
@@ -280,7 +282,7 @@ def main_page() -> None:
     unit = "%" if normalized else "GW"
 
     fig = go.Figure(
-        data=go.Choroplethmap(
+        data=go.Choropleth(
             geojson=shapes_dict,
             locations=world.index,
             z=world["power_percentage" if normalized else "power_gw"],
@@ -291,7 +293,9 @@ def main_page() -> None:
                 [1.0, "#faa056"],   # orange
             ],
             colorbar_title="Power [%]" if normalized else "Power [GW]",
-            marker_opacity=0.5,
+            marker_opacity=1.0,
+            marker_line_width=0.5,
+            marker_line_color='rgb(0,0,0)',
             hovertemplate=f"<b>%{{customdata}}</b><br>Power: %{{z:.2f}} {unit}<extra></extra>",
             customdata=world["country_name"]
             if "country_name" in world.columns
@@ -300,9 +304,22 @@ def main_page() -> None:
     )
 
     fig.update_layout(
-        mapbox_style="carto-positron",
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
-        geo_scope="world",
+       geo=dict(
+           scope='world',
+           projection=dict(
+               type='orthographic'
+           ),
+           bgcolor = 'rgba(0,0,0,0)',
+           landcolor = 'rgb(217,217,217)',
+           showcountries = True,
+           countrycolor = 'rgb(100,100,100)',
+           showframe =False,
+           showocean = True,
+           oceancolor = 'rgba(0,0,0,0)'
+       )
+        
+       
     )
 
     clicked_data = st.plotly_chart(fig, on_select="rerun", key="world_map")
