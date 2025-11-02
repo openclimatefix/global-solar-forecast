@@ -30,7 +30,7 @@ def get_forecast(
     data = {"site": site, "timestamp": now}
     url = "https://open.quartz.solar/forecast/"
 
-    r = requests.post(url, json=data, timeout=20)
+    r = requests.post(url, json=data, timeout=60)
 
     if r.status_code == 200:
         forecast = r.json()
