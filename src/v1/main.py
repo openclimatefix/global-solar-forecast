@@ -2,7 +2,7 @@
 import json
 import warnings
 from pathlib import Path
-
+import datetime
 import geopandas as gpd
 import pandas as pd
 import plotly.graph_objects as go
@@ -303,12 +303,25 @@ def main_page() -> None:
         ),
     )
 
+    def get_default_longitude():
+  
+        utc_hour = datetime.datetime.utcnow().hour
+        lon = (utc_hour - 12) * -15  
+        if lon > 180:
+            lon -= 360
+        if lon < -180:
+            lon += 360
+
+        return lon
+
+
     fig.update_layout(
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
        geo=dict(
            scope='world',
            projection=dict(
-               type='orthographic'
+            type='orthographic',
+            rotation=dict(lon=get_default_longitude(),lat=20)
            ),
            bgcolor = 'rgba(0,0,0,0)',
            landcolor = 'rgb(217,217,217)',
