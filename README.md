@@ -1,11 +1,8 @@
-# OCF Template
-
+# Global Solar Forecast
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
-
-**Starting point for OCF projects**
  
 [![workflows badge](https://img.shields.io/github/actions/workflow/status/openclimatefix/global-solar-forecast/ci.yml?branch=maine&color=FFD053&label=workflow)](https://github.com/openclimatefix/global-solar-forecast/actions/workflows/ci.yml)
 [![tags badge](https://img.shields.io/github/v/tag/openclimatefix/global-solar-forecast?include_prereleases&sort=semver&color=FFAC5F)](https://github.com/openclimatefix/global-solar-forecast/tags)
