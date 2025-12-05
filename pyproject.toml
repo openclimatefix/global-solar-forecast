@@ -7,10 +7,10 @@ build-backend = "setuptools.build_meta"
 # Metadata (see https://peps.python.org/pep-0621/)
 [project]
 name = "global-solar-forecast"
-dynamic = ["version"] # Set automtically using git: https://setuptools-git-versioning.readthedocs.io/en/stable/
-description = "Consise summary of project"
+dynamic = ["version"] # Set automatically using git: https://setuptools-git-versioning.readthedocs.io/en/stable/
+description = "Concise summary of project"
 readme = {file = "README.md", content-type = "text/markdown"}
-requires-python = ">=3.12.0"
+requires-python = ">=3.12.0, <3.14"
 license = {text = "MIT License"}
 authors = [
     { name = "Open Climate Fix Team", email = "info@openclimatefix.org"}
