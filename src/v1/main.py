@@ -12,6 +12,7 @@ import streamlit as st
 from constants import ocf_palette
 from country import country_page
 from forecast import get_forecast
+from seasonal_norm import get_simplified_seasonal_norm
 
 data_dir = "src/v1/data"
 
@@ -149,22 +150,53 @@ def main_page() -> None:
         "Of course this number is always changing so please see the `Capacities` tab "
         "for actual the numbers we have used. ",
     )
+
+    # Add option to show seasonal norm
+    show_norm = st.checkbox("Show seasonal norm", value=False)
+
     # Toggle to show stacked chart (top N countries + Other)
     show_stacked = st.checkbox("Show stacked global chart (top 10 countries)", value=False)
 
     if not show_stacked:
-        fig = go.Figure(
-            data=go.Scatter(
+        # Calculate seasonal norm for global forecast
+        total_forecast_indexed = total_forecast.set_index("timestamp")
+        seasonal_norm_df = get_simplified_seasonal_norm(
+            total_forecast_indexed,
+            global_solar_capacity,
+        )
+
+        fig = go.Figure()
+
+        # Add forecast line
+        fig.add_trace(
+            go.Scatter(
                 x=total_forecast["timestamp"],
                 y=total_forecast["power_gw"],
-                marker_color=ocf_palette[0],
+                name="Forecast",
+                line={"color": ocf_palette[0], "width": 2},
+                mode="lines",
             ),
         )
+
+        # Add seasonal norm line if requested
+        if show_norm:
+            fig.add_trace(
+                go.Scatter(
+                    x=seasonal_norm_df.index,
+                    y=seasonal_norm_df["power_gw_norm"],
+                    name="Seasonal Norm",
+                    line={"color": ocf_palette[1], "width": 2, "dash": "dash"},
+                    mode="lines",
+                ),
+            )
+
         fig.update_layout(
             yaxis_title="Power [GW]",
             xaxis_title="Time (UTC)",
             yaxis_range=[0, None],
             title="Global Solar Power Forecast",
+            hovermode="x unified",
+            legend={"orientation": "h", "yanchor": "bottom", "y": 1.02, "xanchor": "right", "x": 1},
         )
         st.plotly_chart(fig)
     else:
