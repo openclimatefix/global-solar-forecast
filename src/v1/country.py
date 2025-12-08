@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 import pycountry
 import pytz
 import streamlit as st
-from constants import ocf_palette
+from constants import CHART_LEGEND_CONFIG, FORECAST_LINE_STYLE, SEASONAL_NORM_LINE_STYLE
 from forecast import get_forecast
 from seasonal_norm import get_simplified_seasonal_norm
 
@@ -248,8 +248,8 @@ def country_page() -> None:
     # Convert timestamps to local time
     forecast = convert_utc_to_local_time(forecast, timezone_str)
 
-    # Calculate seasonal norm for comparison
-    seasonal_norm_df = get_simplified_seasonal_norm(forecast, capacity)
+    # Calculate seasonal norm for comparison (pass latitude for hemisphere adjustment)
+    seasonal_norm_df = get_simplified_seasonal_norm(forecast, capacity, lat)
 
     # Add option to show/hide seasonal norm
     show_norm = st.checkbox("Show seasonal norm", value=True)
@@ -264,7 +264,7 @@ def country_page() -> None:
             x=forecast.index,
             y=forecast["power_gw"],
             name="Forecast",
-            line={"color": ocf_palette[0], "width": 2},
+            line=FORECAST_LINE_STYLE,
             mode="lines",
         ),
     )
@@ -276,7 +276,7 @@ def country_page() -> None:
                 x=seasonal_norm_df.index,
                 y=seasonal_norm_df["power_gw_norm"],
                 name="Seasonal Norm",
-                line={"color": ocf_palette[1], "width": 2, "dash": "dash"},
+                line=SEASONAL_NORM_LINE_STYLE,
                 mode="lines",
             ),
         )
@@ -287,7 +287,7 @@ def country_page() -> None:
         yaxis_range=[0, None],
         title=f"Solar Forecast for {country.name} (Local Time)",
         hovermode="x unified",
-        legend={"orientation": "h", "yanchor": "bottom", "y": 1.02, "xanchor": "right", "x": 1},
+        legend=CHART_LEGEND_CONFIG,
     )
 
     st.plotly_chart(fig)

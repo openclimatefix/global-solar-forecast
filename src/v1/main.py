@@ -9,7 +9,12 @@ import pandas as pd
 import plotly.graph_objects as go
 import pycountry
 import streamlit as st
-from constants import ocf_palette
+from constants import (
+    CHART_LEGEND_CONFIG,
+    FORECAST_LINE_STYLE,
+    SEASONAL_NORM_LINE_STYLE,
+    ocf_palette,
+)
 from country import country_page
 from forecast import get_forecast
 from seasonal_norm import get_simplified_seasonal_norm
@@ -159,10 +164,12 @@ def main_page() -> None:
 
     if not show_stacked:
         # Calculate seasonal norm for global forecast
+        # Use lat=0 for global average (mix of both hemispheres)
         total_forecast_indexed = total_forecast.set_index("timestamp")
         seasonal_norm_df = get_simplified_seasonal_norm(
             total_forecast_indexed,
             global_solar_capacity,
+            lat=0.0,
         )
 
         fig = go.Figure()
@@ -173,7 +180,7 @@ def main_page() -> None:
                 x=total_forecast["timestamp"],
                 y=total_forecast["power_gw"],
                 name="Forecast",
-                line={"color": ocf_palette[0], "width": 2},
+                line=FORECAST_LINE_STYLE,
                 mode="lines",
             ),
         )
@@ -185,7 +192,7 @@ def main_page() -> None:
                     x=seasonal_norm_df.index,
                     y=seasonal_norm_df["power_gw_norm"],
                     name="Seasonal Norm",
-                    line={"color": ocf_palette[1], "width": 2, "dash": "dash"},
+                    line=SEASONAL_NORM_LINE_STYLE,
                     mode="lines",
                 ),
             )
@@ -196,7 +203,7 @@ def main_page() -> None:
             yaxis_range=[0, None],
             title="Global Solar Power Forecast",
             hovermode="x unified",
-            legend={"orientation": "h", "yanchor": "bottom", "y": 1.02, "xanchor": "right", "x": 1},
+            legend=CHART_LEGEND_CONFIG,
         )
         st.plotly_chart(fig)
     else:
