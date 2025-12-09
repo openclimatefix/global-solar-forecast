@@ -248,8 +248,8 @@ def country_page() -> None:
     # Convert timestamps to local time
     forecast = convert_utc_to_local_time(forecast, timezone_str)
 
-    # Calculate seasonal norm for comparison (pass latitude for hemisphere adjustment)
-    seasonal_norm_df = get_simplified_seasonal_norm(forecast, capacity, lat)
+    # Calculate seasonal norm for comparison (pass lat/lon for accurate solar time)
+    seasonal_norm_df = get_simplified_seasonal_norm(forecast, capacity, lat, lon)
 
     # Add option to show/hide seasonal norm
     show_norm = st.checkbox("Show seasonal norm", value=True)
