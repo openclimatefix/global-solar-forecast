@@ -8,8 +8,9 @@ import plotly.graph_objects as go
 import pycountry
 import pytz
 import streamlit as st
-from constants import ocf_palette
+from constants import CHART_LEGEND_CONFIG, FORECAST_LINE_STYLE, SEASONAL_NORM_LINE_STYLE
 from forecast import get_forecast
+from seasonal_norm import get_seasonal_norm_for_forecast
 
 data_dir = "src/v1/data"
 
@@ -247,20 +248,48 @@ def country_page() -> None:
     # Convert timestamps to local time
     forecast = convert_utc_to_local_time(forecast, timezone_str)
 
-    # plot in ploty
+    # Calculate seasonal norm from historical averages
+    seasonal_norm_df = get_seasonal_norm_for_forecast(
+        country.name, capacity, lat, lon, forecast,
+    )
+
+    # Add option to show/hide seasonal norm
+    show_norm = st.checkbox("Show seasonal norm", value=True)
+
+    # plot in plotly
     st.write(f"{country.name} Solar Forecast, capacity of {capacity} GW.")
-    fig = go.Figure(
-        data=go.Scatter(
+    fig = go.Figure()
+
+    # Add forecast line
+    fig.add_trace(
+        go.Scatter(
             x=forecast.index,
             y=forecast["power_gw"],
-            marker_color=ocf_palette[0],
+            name="Forecast",
+            line=FORECAST_LINE_STYLE,
+            mode="lines",
         ),
     )
+
+    # Add seasonal norm line if requested
+    if show_norm:
+        fig.add_trace(
+            go.Scatter(
+                x=seasonal_norm_df.index,
+                y=seasonal_norm_df["power_gw_norm"],
+                name="Seasonal Norm",
+                line=SEASONAL_NORM_LINE_STYLE,
+                mode="lines",
+            ),
+        )
+
     fig.update_layout(
         yaxis_title="Power [GW]",
         xaxis_title="Local Time",
         yaxis_range=[0, None],
         title=f"Solar Forecast for {country.name} (Local Time)",
+        hovermode="x unified",
+        legend=CHART_LEGEND_CONFIG,
     )
 
     st.plotly_chart(fig)
