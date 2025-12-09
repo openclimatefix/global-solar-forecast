@@ -17,7 +17,7 @@ from constants import (
 )
 from country import country_page
 from forecast import get_forecast
-from seasonal_norm import get_simplified_seasonal_norm
+from seasonal_norm import aggregate_seasonal_norms_for_countries
 
 data_dir = "src/v1/data"
 
@@ -79,6 +79,8 @@ def main_page() -> None:
 
     # run forecast for each country
     forecast_per_country: dict[str, pd.DataFrame] = {}
+    country_coords: dict[str, tuple[float, float]] = {}
+    country_names: dict[str, str] = {}
     my_bar = st.progress(0)
     countries = list(pycountry.countries)
     for i in range(len(countries)):
@@ -132,6 +134,8 @@ def main_page() -> None:
                 forecast["power_percentage"] = forecast["power_gw"] / float(capacity) * 100
 
             forecast_per_country[country.alpha_3] = forecast
+            country_coords[country.alpha_3] = (lat, lon)
+            country_names[country.alpha_3] = country.name
 
     my_bar.progress(100, "Loaded all forecasts.")
     my_bar.empty()
@@ -163,13 +167,12 @@ def main_page() -> None:
     show_stacked = st.checkbox("Show stacked global chart (top 10 countries)", value=False)
 
     if not show_stacked:
-        # Calculate seasonal norm for global forecast
-        # Use lat=0 for global average (mix of both hemispheres)
-        total_forecast_indexed = total_forecast.set_index("timestamp")
-        seasonal_norm_df = get_simplified_seasonal_norm(
-            total_forecast_indexed,
-            global_solar_capacity,
-            lat=0.0,
+        # Calculate seasonal norm by aggregating all countries
+        seasonal_norm_df = aggregate_seasonal_norms_for_countries(
+            forecast_per_country,
+            solar_capacity_per_country,
+            country_coords,
+            country_names,
         )
 
         fig = go.Figure()

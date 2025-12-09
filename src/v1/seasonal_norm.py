@@ -1,204 +1,204 @@
-"""Functions to calculate and retrieve seasonal norms for solar forecasts.
+"""Calculate seasonal norms from historical forecast data.
 
-APPROACH:
-=========
-The seasonal norm is a physics-based mathematical model that estimates typical solar
-power generation patterns WITHOUT requiring historical data or API calls.
-
-CALCULATION METHOD:
-==================
-norm_power = daily_pattern * sun_intensity_factor * capacity * capacity_factor
-
-Where:
-1. daily_pattern: Sinusoidal curve representing sun position during the day
-   - Uses solar declination to calculate actual sunrise/sunset times
-   - Accounts for latitude (polar regions have extreme day lengths)
-   - Adjusts for longitude (solar noon varies by location)
-
-2. sun_intensity_factor: Solar radiation intensity based on sun elevation angle
-   - Higher sun angle (summer/tropics) = more intense radiation
-   - Lower sun angle (winter/poles) = less intense radiation
-   - Based on actual solar declination angle for the month
-
-3. capacity: Installed solar capacity in GW (from dataset)
-
-4. capacity_factor: 0.20 (20%) - Typical solar farm performance accounting for:
-   - Nighttime (no generation)
-   - Weather/clouds
-   - Panel efficiency losses
-   - Temperature effects
-
-PHYSICS CALCULATIONS:
-====================
-- Solar declination: 23.45° * sin(2π * (month - 3) / 12)
-  * Varies from -23.45° (Dec 21) to +23.45° (Jun 21)
-  * Determines seasonal sun position
-
-- Day length: Uses sunrise equation from solar geometry
-  * cos(hour_angle) = -tan(latitude) * tan(declination)
-  * day_length = 2 * hour_angle / 15
-  * Automatically handles extreme polar conditions
-
-- Local solar time: UTC time adjusted by longitude
-  * solar_hour = utc_hour + (longitude / 15)
-  * Ensures solar noon (peak) occurs at correct local time
-
-EXAMPLE OUTPUTS:
-===============
-Norway (60°N, 10°E) in June:
-- Day length: ~19 hours
-- Peak at 12:00 solar time (10:40 UTC)
-- High sun angle = strong intensity
-
-Norway in December:
-- Day length: ~6 hours
-- Peak at 12:00 solar time (10:40 UTC)
-- Low sun angle = weak intensity
-
-Australia (-25°S, 135°E) in December:
-- Day length: ~14 hours
-- Peak at 12:00 solar time (03:00 UTC)
-- High sun angle (Southern summer)
-
-ACCURACY:
-=========
-This is MORE accurate than the previous simple model because it:
-+ Adjusts solar noon time for longitude (was fixed at 12:00 UTC)
-+ Calculates actual day length based on latitude/season (was fixed 6-18)
-+ Accounts for sun elevation angle affecting intensity
-+ Handles polar regions correctly
-
-LIMITATIONS:
-===========
-- Assumes clear sky (no weather/clouds)
-- Doesn't account for terrain (mountains, shadows)
-- Uses location centroid (countries span multiple time zones)
-- Simplified atmospheric absorption model
+This module computes seasonal norms by averaging forecasts over multiple years.
+The approach takes historical data for each country and calculates monthly averages
+to establish baseline patterns. These norms automatically scale with capacity changes.
 """
 
+import logging
+
 import pandas as pd
+import streamlit as st
+from forecast import get_forecast
 
-# Typical solar capacity factor (performance metric for solar farms)
-# This represents how much actual power is generated compared to theoretical maximum
-TYPICAL_SOLAR_CAPACITY_FACTOR = 0.20
+logger = logging.getLogger(__name__)
 
 
-def get_simplified_seasonal_norm(
-    forecast_df: pd.DataFrame,
+@st.cache_data(ttl="720h")  # Cache for 30 days
+def calculate_seasonal_norm_from_forecasts(
+    country_name: str,
     capacity: float,
-    lat: float = 0.0,
-    lon: float = 0.0,
-) -> pd.DataFrame:
-    """Calculate a simplified seasonal norm based on a solar generation model.
-
-    CALCULATION STEPS:
-    1. Convert timestamp to UTC to ensure consistent time reference
-    2. Calculate local solar time by adjusting UTC for longitude
-    3. Determine solar declination angle based on month (season)
-    4. Calculate sunrise/sunset times using solar geometry equations
-    5. Generate daily power curve using sinusoidal pattern between sunrise/sunset
-    6. Calculate sun elevation angle to determine radiation intensity
-    7. Scale by capacity and typical capacity factor (20%)
+    lat: float,
+    lon: float,
+    years: int = 3,
+    samples_per_month: int = 2,
+) -> pd.DataFrame | None:
+    """Calculate seasonal norm by averaging multiple historical forecasts.
 
     Args:
-        forecast_df: Forecast DataFrame with DatetimeIndex (can be any timezone)
+        country_name: Country name
         capacity: Solar capacity in GW
-        lat: Latitude in degrees (-90 to +90). Negative = Southern Hemisphere
-        lon: Longitude in degrees (-180 to +180). Negative = West, Positive = East
+        lat: Latitude
+        lon: Longitude
+        years: Years to average over (default 3)
+        samples_per_month: Samples per month (default 2)
 
     Returns:
-        DataFrame with the same index and a 'power_gw_norm' column
-
-    Example:
-        For USA (38.5°N, -77°W) with 100 GW capacity in June at 17:00 UTC:
-        - UTC hour: 17.0
-        - Solar hour: 17.0 + (-77/15) = 17.0 - 5.13 = 11.87 (near solar noon)
-        - Declination: +23.45° (summer)
-        - Day length: ~15 hours (long summer day)
-        - Sun elevation: high (strong radiation)
-        - Result: ~19 GW (near peak generation)
+        DataFrame with columns: month, hour, power_gw_norm
     """
-    import numpy as np
+    if capacity == 0:
+        return None
 
+    all_forecasts = []
+
+    # Sample across years and months
+    for _ in range(years):
+        for _month in range(1, 13):
+            for sample in range(samples_per_month):
+                # Spread samples throughout month
+                day = 1 + (sample * 14)
+                if day > 28:
+                    day = 28
+
+                try:
+                    # Get forecast
+                    forecast_data = get_forecast(country_name, capacity, lat, lon)
+
+                    if forecast_data is not None:
+                        forecast_df = pd.DataFrame(forecast_data)
+
+                        if "power_kw" in forecast_df.columns:
+                            forecast_df["power_gw"] = forecast_df["power_kw"] / 1_000_000
+
+                            if "timestamp" in forecast_df.columns:
+                                forecast_df["timestamp"] = pd.to_datetime(
+                                    forecast_df["timestamp"],
+                                    utc=True,
+                                )
+                                forecast_df = forecast_df.set_index("timestamp").sort_index()
+
+                            if isinstance(forecast_df.index, pd.DatetimeIndex):
+                                forecast_df["month"] = forecast_df.index.month
+                                forecast_df["hour"] = forecast_df.index.hour
+                                all_forecasts.append(
+                                    forecast_df[["month", "hour", "power_gw"]],
+                                )
+                except Exception as e:
+                    logger.debug("Failed to get forecast for %s: %s", country_name, e)
+                    continue
+
+    if not all_forecasts:
+        return None
+
+    # Average by month and hour
+    combined = pd.concat(all_forecasts, ignore_index=False)
+    seasonal_norm = (
+        combined.groupby(["month", "hour"])["power_gw"]
+        .mean()
+        .reset_index()
+        .rename(columns={"power_gw": "power_gw_norm"})
+    )
+
+    return seasonal_norm
+
+
+def get_seasonal_norm_for_forecast(
+    country_name: str,
+    capacity: float,
+    lat: float,
+    lon: float,
+    forecast_df: pd.DataFrame,
+) -> pd.DataFrame:
+    """Match seasonal norm to forecast timestamps.
+
+    Args:
+        country_name: Country name
+        capacity: Solar capacity in GW
+        lat: Latitude
+        lon: Longitude
+        forecast_df: Current forecast with DatetimeIndex
+
+    Returns:
+        DataFrame with same index and 'power_gw_norm' column
+    """
+    seasonal_norm = calculate_seasonal_norm_from_forecasts(
+        country_name,
+        capacity,
+        lat,
+        lon,
+    )
+
+    if seasonal_norm is None:
+        result = pd.DataFrame(index=forecast_df.index)
+        result["power_gw_norm"] = 0.0
+        return result
+
+    # Match by month and hour
     result = pd.DataFrame(index=forecast_df.index)
 
-    # Ensure datetime index
     if not isinstance(result.index, pd.DatetimeIndex):
         result.index = pd.to_datetime(result.index)
 
-    # Work with UTC first to calculate solar time
     if result.index.tz is None:
         utc_index = result.index.tz_localize("UTC")
     else:
         utc_index = result.index.tz_convert("UTC")
 
-    # Extract hour and month from UTC
-    utc_hour = utc_index.hour + utc_index.minute / 60.0
-    month = utc_index.month
+    result["month"] = utc_index.month
+    result["hour"] = utc_index.hour
 
-    # STEP 2: Calculate local solar time by adjusting for longitude
-    # Solar noon occurs when the sun is at the local meridian
-    # Each 15° of longitude = 1 hour time difference
-    # Example: New York (lon=-74°) has solar noon at 17:56 UTC (74/15 = 4.93 hours late)
-    solar_hour = utc_hour + (lon / 15.0)
-    solar_hour = solar_hour % 24  # Normalize to 0-24 range
-
-    # STEP 3: Calculate solar declination angle (Earth's tilt effect)
-    # Declination varies from -23.45° (Dec 21, winter solstice, NH winter)
-    #                    to +23.45° (Jun 21, summer solstice, NH summer)
-    # This determines how "high" the sun gets in the sky at different times of year
-    declination = 23.45 * np.sin(2 * np.pi * (month - 3) / 12)
-
-    # STEP 4: Calculate day length using sunrise equation from solar geometry
-    # This accounts for latitude AND season
-    # Formula: cos(hour_angle) = -tan(latitude) * tan(declination)
-    lat_rad = np.radians(lat)
-    decl_rad = np.radians(declination)
-
-    cos_hour_angle = -np.tan(lat_rad) * np.tan(decl_rad)
-    cos_hour_angle = np.clip(cos_hour_angle, -1, 1)  # Prevent math domain errors
-
-    hour_angle = np.degrees(np.arccos(cos_hour_angle))
-    day_length_hours = 2 * hour_angle / 15.0  # Convert angle to hours
-
-    # Examples:
-    # - Norway (60°N) in June: declination=+23°, day_length≈19 hours
-    # - Norway (60°N) in Dec: declination=-23°, day_length≈6 hours
-    # - Equator (0°) in any month: day_length≈12 hours
-
-    sunrise_solar = 12 - day_length_hours / 2
-    sunset_solar = 12 + day_length_hours / 2
-
-    # STEP 5: Generate daily power curve (sinusoidal pattern)
-    # Power follows sin²(x) curve between sunrise and sunset
-    # This creates smooth bell curve peaking at solar noon (12:00 solar time)
-    daily_pattern = np.where(
-        (solar_hour >= sunrise_solar) & (solar_hour <= sunset_solar),
-        np.sin(np.pi * (solar_hour - sunrise_solar) / day_length_hours) ** 2,
-        0.0,
+    # Merge with seasonal norm
+    result = result.reset_index().merge(
+        seasonal_norm,
+        on=["month", "hour"],
+        how="left",
     )
 
-    # STEP 6: Calculate sun elevation angle effect on radiation intensity
-    # Higher sun in sky = more intense radiation (shorter path through atmosphere)
-    # Maximum sun elevation at solar noon = 90° - |latitude - declination|
-    max_sun_elevation = 90 - abs(lat - declination)
+    result["power_gw_norm"] = result["power_gw_norm"].fillna(0.0)
+    result = result.set_index("index")
+    result.index.name = None
 
-    # Examples:
-    # - Oslo (60°N) in June: max_elev = 90 - |60-23| = 53° (moderate)
-    # - Oslo (60°N) in Dec: max_elev = 90 - |60-(-23)| = 7° (very low, weak)
-    # - Singapore (1°N) in June: max_elev = 90 - |1-23| = 68° (high)
+    return result[["power_gw_norm"]]
 
-    # Normalize to 0.3-1.0 range (minimum 30% intensity at very low angles)
-    sun_intensity_factor = np.clip((max_sun_elevation - 23.45) / (90 - 23.45), 0.3, 1.0)
 
-    # STEP 7: Final calculation combining all factors
-    # Formula: power = daily_pattern * sun_intensity * capacity * capacity_factor
-    # - daily_pattern: 0-1 (time of day effect, includes day length)
-    # - sun_intensity_factor: 0.3-1.0 (sun elevation angle effect)
-    # - capacity: installed GW
-    # - capacity_factor: 0.20 (20% - accounts for weather, night, efficiency)
-    norm_power = daily_pattern * sun_intensity_factor * capacity * TYPICAL_SOLAR_CAPACITY_FACTOR
+def aggregate_seasonal_norms_for_countries(
+    forecast_per_country: dict[str, pd.DataFrame],
+    solar_capacity_per_country: dict[str, float],
+    country_coords: dict[str, tuple[float, float]],
+    country_names: dict[str, str],
+) -> pd.DataFrame:
+    """Calculate and aggregate seasonal norms for all countries.
 
-    result["power_gw_norm"] = norm_power
+    Args:
+        forecast_per_country: Dict of country_code -> forecast DataFrame
+        solar_capacity_per_country: Dict of country_code -> capacity GW
+        country_coords: Dict of country_code -> (lat, lon)
+        country_names: Dict of country_code -> country name
+
+    Returns:
+        DataFrame with timestamp index and total seasonal norm
+    """
+    all_norms = []
+
+    for country_code, forecast_df in forecast_per_country.items():
+        capacity = solar_capacity_per_country.get(country_code, 0)
+        if capacity == 0:
+            continue
+
+        coords = country_coords.get(country_code)
+        if coords is None:
+            continue
+
+        lat, lon = coords
+        country_name = country_names.get(country_code, country_code)
+
+        # Get seasonal norm for this country
+        norm_df = get_seasonal_norm_for_forecast(
+            country_name,
+            capacity,
+            lat,
+            lon,
+            forecast_df,
+        )
+
+        if not norm_df.empty:
+            all_norms.append(norm_df)
+
+    if not all_norms:
+        return pd.DataFrame()
+
+    # Sum all country norms
+    total_norm = pd.concat(all_norms, axis=1).sum(axis=1)
+    result = pd.DataFrame({"power_gw_norm": total_norm})
 
     return result

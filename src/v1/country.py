@@ -10,7 +10,7 @@ import pytz
 import streamlit as st
 from constants import CHART_LEGEND_CONFIG, FORECAST_LINE_STYLE, SEASONAL_NORM_LINE_STYLE
 from forecast import get_forecast
-from seasonal_norm import get_simplified_seasonal_norm
+from seasonal_norm import get_seasonal_norm_for_forecast
 
 data_dir = "src/v1/data"
 
@@ -248,8 +248,10 @@ def country_page() -> None:
     # Convert timestamps to local time
     forecast = convert_utc_to_local_time(forecast, timezone_str)
 
-    # Calculate seasonal norm for comparison (pass lat/lon for accurate solar time)
-    seasonal_norm_df = get_simplified_seasonal_norm(forecast, capacity, lat, lon)
+    # Calculate seasonal norm from historical averages
+    seasonal_norm_df = get_seasonal_norm_for_forecast(
+        country.name, capacity, lat, lon, forecast,
+    )
 
     # Add option to show/hide seasonal norm
     show_norm = st.checkbox("Show seasonal norm", value=True)
