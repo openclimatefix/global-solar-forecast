@@ -1,5 +1,6 @@
 """A Streamlit app to show global solar forecast."""
 
+import datetime
 import json
 import warnings
 from pathlib import Path
@@ -47,7 +48,9 @@ def main_page() -> None:
     possible_cols = ["adm0_a3", "ADM0_A3", "iso_a3", "ISO_A3", "sov_a3", "gu_a3"]
     iso_col = next((c for c in possible_cols if c in world.columns), None)
     if iso_col is None:
-        raise KeyError(f"No ISO country code column found. Columns: {world.columns.tolist()}")
+        raise KeyError(
+            f"No ISO country code column found. Columns: {world.columns.tolist()}",
+        )
     world = world.rename(columns={iso_col: "adm0_a3"})
     # Fix known incorrect country codes
     world["adm0_a3"] = world["adm0_a3"].replace({"SDS": "SSD"})
@@ -64,7 +67,9 @@ def main_page() -> None:
 
     # add column with country code and name
     solar_capacity_per_country_df["country_code_and_name"] = (
-        solar_capacity_per_country_df.index + " - " + solar_capacity_per_country_df["country_name"]
+        solar_capacity_per_country_df.index
+        + " - "
+        + solar_capacity_per_country_df["country_name"]
     )
 
     # convert to dict
@@ -123,7 +128,9 @@ def main_page() -> None:
             if capacity == 0.0:
                 forecast["power_percentage"] = None
             else:
-                forecast["power_percentage"] = forecast["power_gw"] / float(capacity) * 100
+                forecast["power_percentage"] = (
+                    forecast["power_gw"] / float(capacity) * 100
+                )
 
             forecast_per_country[country.alpha_3] = forecast
 
@@ -150,7 +157,10 @@ def main_page() -> None:
         "for actual the numbers we have used. ",
     )
     # Toggle to show stacked chart (top N countries + Other)
-    show_stacked = st.checkbox("Show stacked global chart (top 10 countries)", value=False)
+    show_stacked = st.checkbox(
+        "Show stacked global chart (top 10 countries)",
+        value=False,
+    )
 
     if not show_stacked:
         fig = go.Figure(
@@ -212,7 +222,13 @@ def main_page() -> None:
             yaxis_title="Power [GW]",
             xaxis_title="Time (UTC)",
             yaxis_range=[0, None],
-            legend={"orientation": "h", "yanchor": "bottom", "y": 1.02, "xanchor": "right", "x": 1},
+            legend={
+                "orientation": "h",
+                "yanchor": "bottom",
+                "y": 1.02,
+                "xanchor": "right",
+                "x": 1,
+            },
             hovermode="x unified",
             hoverlabel={"namelength": 20, "font": {"size": 12}},
         )
@@ -263,8 +279,12 @@ def main_page() -> None:
             f"{selected_timestamp.strftime('%Y-%m-%d %H:%M')} UTC",
         )
 
-        selected_generation = all_forecasts_df[all_forecasts_df["timestamp"] == selected_timestamp]
-        selected_generation = selected_generation[["country_code", "power_gw", "power_percentage"]]
+        selected_generation = all_forecasts_df[
+            all_forecasts_df["timestamp"] == selected_timestamp
+        ]
+        selected_generation = selected_generation[
+            ["country_code", "power_gw", "power_percentage"]
+        ]
     else:
         st.error("No forecast data available for the map")
         return
@@ -286,30 +306,58 @@ def main_page() -> None:
     # Determine unit for hover template
     unit = "%" if normalized else "GW"
 
+    def get_default_longitude() -> float:
+        """Return rotation longitude so the globe faces the daylight regions."""
+        utc_hour = datetime.datetime.now(datetime.UTC).hour
+        lon = (utc_hour - 12) * 15
+
+        if lon > 180:
+            lon -= 360
+        if lon < -180:
+            lon += 360
+
+        return lon
+
     fig = go.Figure(
-        data=go.Choroplethmap(
+        data=go.Choropleth(
             geojson=shapes_dict,
             locations=world.index,
             z=world["power_percentage" if normalized else "power_gw"],
             colorscale=[
-                [0.0, "#4675c1"],   # blue
-                [0.33, "#58b0a9"],  # green/teal
-                [0.66, "#ffd480"],  # yellow
-                [1.0, "#faa056"],   # orange
+                [0.0, "#4675c1"],
+                [0.33, "#58b0a9"],
+                [0.66, "#ffd480"],
+                [1.0, "#faa056"],
             ],
             colorbar_title="Power [%]" if normalized else "Power [GW]",
-            marker_opacity=0.5,
+            marker_opacity=1.0,
+            marker_line_width=0.5,
+            marker_line_color="rgb(0,0,0)",
             hovertemplate=f"<b>%{{customdata}}</b><br>Power: %{{z:.2f}} {unit}<extra></extra>",
-            customdata=world["country_name"]
-            if "country_name" in world.columns
-            else world["adm0_a3"],
+            customdata=(
+                world["country_name"]
+                if "country_name" in world.columns
+                else world["adm0_a3"]
+            ),
         ),
     )
 
     fig.update_layout(
-        mapbox_style="carto-positron",
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
-        geo_scope="world",
+        geo={
+            "scope": "world",
+            "projection": {
+                "type": "orthographic",
+                "rotation": {"lon": get_default_longitude(), "lat": 20},
+            },
+            "bgcolor": "rgba(0,0,0,0)",
+            "landcolor": "rgb(217,217,217)",
+            "showcountries": True,
+            "countrycolor": "rgb(100,100,100)",
+            "showframe": False,
+            "showocean": True,
+            "oceancolor": "rgba(0,0,0,0)",
+        },
     )
 
     clicked_data = st.plotly_chart(fig, on_select="rerun", key="world_map")
@@ -339,7 +387,9 @@ def get_image_base64(image_path: str) -> str:
 def docs_page() -> None:
     """Documentation page."""
     st.markdown("# Documentation")
-    st.write("There are two main components to this app, the solar capacities and solar forecasts.")
+    st.write(
+        "There are two main components to this app, the solar capacities and solar forecasts.",
+    )
 
     st.markdown("## Solar Capacities")
     st.write(
@@ -367,7 +417,9 @@ def docs_page() -> None:
     st.write("2. Some countries solar capacities are very well known, some are not.")
     st.write("3. The Quartz Open Solar API uses a ML model trained on UK solar data.")
     st.write("4. We use the centroid of each country as the forecast location.")
-    st.write("5. The forecast right now is quite spiky; we are looking into smoothing it.")
+    st.write(
+        "5. The forecast right now is quite spiky; we are looking into smoothing it.",
+    )
 
     faqs = Path("./FAQ.md").read_text()
     st.markdown(faqs)
@@ -412,7 +464,6 @@ if __name__ == "__main__":
             country_page_ref,
             st.Page(capacities_page, title="Capacities"),
             st.Page(docs_page, title="About"),
-
         ],
         position="top",
     )

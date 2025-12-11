@@ -39,7 +39,11 @@ def get_forecast(
         # smooth out some of the predictions
         # ideally we would take this out, and the ML model would do this
         zeros = predictions["power_kw"] == 0
-        predictions = predictions[["power_kw"]].apply(savgol_filter, window_length=10, polyorder=2)
+        predictions = predictions[["power_kw"]].apply(
+            savgol_filter,
+            window_length=10,
+            polyorder=2,
+        )
         predictions.loc[zeros, "power_kw"] = 0
 
         return predictions
