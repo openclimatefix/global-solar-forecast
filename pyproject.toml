@@ -27,7 +27,6 @@ dependencies = [
     "pycountry",
     "plotly",
     "scipy",
-    "timezonefinder",
 ]
 
 [dependency-groups]
