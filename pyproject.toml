@@ -44,6 +44,7 @@ dev = [
     "pylsp-mypy",
     "python-lsp-ruff",
     "scipy-stubs",
+    "timezonefinder"
 ]
 
 [project.scripts]
