@@ -27,6 +27,7 @@ dependencies = [
     "pycountry",
     "plotly",
     "scipy",
+    "timezonefinder",
 ]
 
 [dependency-groups]
@@ -44,7 +45,6 @@ dev = [
     "pylsp-mypy",
     "python-lsp-ruff",
     "scipy-stubs",
-    "timezonefinder"
 ]
 
 [project.scripts]
