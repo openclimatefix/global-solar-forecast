@@ -16,6 +16,16 @@ from forecast import get_forecast
 
 data_dir = "src/v1/data"
 
+def get_default_longitude() -> float:
+        """Return rotation longitude so the globe faces the daylight regions."""
+        utc_hour = datetime.datetime.now(datetime.UTC).hour
+        lon = (utc_hour - 12) * 15
+        if lon > 180:
+            lon -= 360
+        if lon < -180:
+            lon += 360
+
+        return lon
 
 def main_page() -> None:
     """Main page, show a map of the world with the solar forecast."""
@@ -305,18 +315,6 @@ def main_page() -> None:
 
     # Determine unit for hover template
     unit = "%" if normalized else "GW"
-
-    def get_default_longitude() -> float:
-        """Return rotation longitude so the globe faces the daylight regions."""
-        utc_hour = datetime.datetime.now(datetime.UTC).hour
-        lon = (utc_hour - 12) * 15
-
-        if lon > 180:
-            lon -= 360
-        if lon < -180:
-            lon += 360
-
-        return lon
 
     fig = go.Figure(
         data=go.Choropleth(
