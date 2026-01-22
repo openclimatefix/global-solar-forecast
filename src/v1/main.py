@@ -453,21 +453,30 @@ def capacities_page() -> None:
     solar_capacity_per_country_df["source_name"] = parsed.apply(lambda x: x[0])
     solar_capacity_per_country_df["source_url"] = parsed.apply(lambda x: x[1])
 
-    # Display with clickable links
-    st.dataframe(
-        solar_capacity_per_country_df[["capacity_gw", "country_name", "source_url"]],
-        column_config={
-            "capacity_gw": st.column_config.NumberColumn(
-                "Capacity (GW)",
-                format="%.2f",
-            ),
-            "country_name": st.column_config.TextColumn("Country"),
-            "source_url": st.column_config.LinkColumn(
-                "Source",
-                display_text=r"🔗 Link",
-            ),
-        },
-        hide_index=False,
+    # Create HTML clickable links for source column
+    def create_source_link(row: pd.Series) -> str:
+        """Create HTML link with source name as clickable text."""
+        name = row["source_name"]
+        url = row["source_url"]
+        if url:
+            return f'<a href="{url}" target="_blank">{name}</a>'
+        return name
+
+    solar_capacity_per_country_df["source_link"] = solar_capacity_per_country_df.apply(
+        create_source_link, axis=1
+    )
+
+    # Create display dataframe with country_code as proper column
+    display_df = solar_capacity_per_country_df[
+        ["capacity_gw", "country_name", "source_link"]
+    ].copy()
+    display_df = display_df.reset_index()  # Move country_code from index to column
+    display_df.columns = ["Country Code", "Capacity (GW)", "Country", "Source"]
+
+    # Display as HTML table with clickable links
+    st.markdown(
+        display_df.to_html(escape=False, index=False),
+        unsafe_allow_html=True,
     )
 
 
