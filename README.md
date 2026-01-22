@@ -27,54 +27,7 @@ The **solar forecast** is very simple,
 ![image](./dashboard1.png)
 ![image](./dashboard2.png)
 
-## How It Works
-
-The following diagram shows the architecture and data flow of the Global Solar Forecast application:
-
-```mermaid
-flowchart TB
-    subgraph App["Global Solar Forecast App"]
-        direction TB
-        A[("Streamlit App<br/>main.py")] --> B["Load Country Data<br/>capacities.csv"]
-        B --> C{"For Each Country"}
-    end
-
-    subgraph Forecast["Forecast Generation"]
-        direction TB
-        C --> D["Get Country Center<br/>lat/lon coordinates"]
-        D --> E["Call forecast.py<br/>get_forecast()"]
-        E --> F["POST Request to<br/>open.quartz.solar/forecast"]
-    end
-
-    subgraph QuartzAPI["Quartz Solar API"]
-        direction TB
-        F --> G["Fetch Weather Data<br/>from Open-Meteo"]
-        G --> H["Run ML Model<br/>Solar Prediction"]
-        H --> I["Generate 48-hour<br/>Forecast"]
-    end
-
-    subgraph Display["UI Display"]
-        direction TB
-        I --> J["World Map<br/>Color-coded by generation"]
-        I --> K["Stacked Area Charts<br/>by region/country"]
-        I --> L["Country Details<br/>Individual forecasts"]
-    end
-
-    style App fill:#2d3436,stroke:#636e72,color:#dfe6e9
-    style Forecast fill:#0984e3,stroke:#74b9ff,color:#fff
-    style QuartzAPI fill:#6c5ce7,stroke:#a29bfe,color:#fff
-    style Display fill:#00b894,stroke:#55efc4,color:#fff
-```
-
-### Data Flow Summary
-
-1. **App Startup**: Streamlit app loads and reads solar capacity data for each country
-2. **Forecast Request**: For each country, the app calls the Quartz Solar API with location and capacity
-3. **ML Prediction**: The API fetches weather data from Open-Meteo and runs an ML model
-4. **48-Hour Forecast**: Returns power generation predictions for the next 48 hours
-5. **UI Rendering**: Results displayed on an interactive world map and charts
-
-
+## Example usage
 
 TODO add weblink of where this is deployed
 

@@ -1,207 +1,207 @@
 country_code,capacity_gw,country_name,source
-ARG,1.74,Argentina,Ember
-ARM,0.49,Armenia,Ember
-AUS,38.47,Australia,Ember
-AUT,8.48,Austria,Ember
-AZE,0.29,Azerbaijan,Ember
-BGD,0.85,Bangladesh,Ember
-BLR,0.26,Belarus,Ember
-BEL,9.75,Belgium,Ember
-BOL,0.18,Bolivia,Ember
-BIH,0.21,Bosnia Herzegovina,Ember
-BRA,53.11,Brazil,Ember
-BGR,3.91,Bulgaria,Ember
-KHM,0.88,Cambodia,Ember
-CAN,6.11,Canada,Ember
-CHL,11.05,Chile,Ember
-CHN,887.93,China,Ember
-COL,1.39,Colombia,Ember
-CRI,0.07,Costa Rica,Ember
-HRV,0.86,Croatia,Ember
-CYP,0.72,Cyprus,Ember
-CZE,4.16,Czechia,Ember
-DNK,3.94,Denmark,Ember
-DOM,1.42,Dominican Republic (the),Ember
-ECU,0.03,Ecuador,Ember
-EGY,2.59,Egypt,Ember
-SLV,0.65,El Salvador,Ember
-EST,1.33,Estonia,Ember
-FIN,1.2,Finland,Ember
-FRA,21.53,France,Ember
-GEO,0.13,Georgia,Ember
-DEU,89.94,Germany,Ember
-GRC,9.27,Greece,Ember
-HUN,7.7,Hungary,Ember
-IND,97.38,India,Ember
-IRN,0.78,Iran (Islamic Republic of),Ember
-IRL,1.34,Ireland,Ember
-ITA,36.01,Italy,Ember
-JPN,91.61,Japan,Ember
-KAZ,1.2,Kazakhstan,Ember
-KEN,0.37,Kenya,Ember
-KWT,0.1,Kuwait,Ember
-LVA,0.47,Latvia,Ember
-LTU,2.57,Lithuania,Ember
-LUX,0.52,Luxembourg,Ember
-MYS,2.31,Malaysia,Ember
-MLT,0.23,Malta,Ember
-MEX,11.99,Mexico,Ember
-MDA,0.34,Moldova,Ember
-MNG,0.14,Mongolia,Ember
-MNE,0.03,Montenegro,Ember
-MAR,0.93,Morocco,Ember
-MMR,0.22,Myanmar,Ember
-NLD,24.05,Netherlands,Ember
-NZL,0.57,New Zealand,Ember
-NGA,0.14,Nigeria,Ember
-MKD,0.83,North Macedonia,Ember
-NOR,0.8,Norway,Ember
-OMN,0.67,Oman,Ember
-PAK,1.4,Pakistan,Ember
-PER,0.53,Peru,Ember
-PHL,2.97,Philippines (the),Ember
-POL,20.2,Poland,Ember
-PRT,5.81,Portugal,Ember
-PRI,0.96,Puerto Rico,Ember
-QAT,1.68,Qatar,Ember
-ROU,4.69,Romania,Ember
-RUS,2.55,Russian Federation (the),Ember
-SAU,4.34,Saudi Arabia,Ember
-SRB,0.24,Serbia,Ember
-SVK,0.87,Slovakia,Ember
-SVN,1.31,Slovenia,Ember
-ZAF,6.67,South Africa,Ember
-KOR,26.65,South Korea,Ember
-ESP,38.59,Spain,Ember
-LKA,1.45,Sri Lanka,Ember
-SWE,4.96,Sweden,Ember
-CHE,7.79,Switzerland,Ember
-TWN,14.28,Taiwan,Ember
-THA,3.38,Thailand,Ember
-TUN,0.77,Tunisia,Ember
-TUR,19.88,Turkey,Ember
-ARE,6.01,United Arab Emirates,Ember
-GBR,17.6,United Kingdom,Ember
-USA,177.47,United States of America,Ember
-URY,0.33,Uruguay,Ember
-VNM,18.67,Viet Nam,Ember
-UKR,5.5,Ukraine,Wikipedia - https://en.wikipedia.org/wiki/Solar_power_by_country
-TJK,0.0,Tajikistan,CABAR.asia 2024 (600 kW USAID project) - https://cabar.asia/en/tajikistan-solar-energy-in-support-of-hydropower-plants
-TKM,0.0,Turkmenistan,UNDP 2012 Report - https://www.undp.org/sites/g/files/zskgke326/files/migration/eurasia/Turkmenistan.pdf
-TLS,0.0,Timor-Leste,Asian Development Bank sector assessment 2016-2020 - https://www.adb.org/sites/default/files/linked-documents/cps-tim-2016-2020-ssa-05.pdf
-DZA,0.46,Algeria,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-SEN,0.27,Senegal,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-AGO,0.36,Angola,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-BEN,0.04,Benin,https://ember-energy.org/latest-insights/global-electricity-review-2025/
-BFA,0.21,Burkina Faso,https://ember-energy.org/latest-insights/global-electricity-review-2025/
-BDI,0.01,Burundi,https://ember-energy.org/latest-insights/global-electricity-review-2025/
-CMR,0.06,Cameroon,https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/
-CPV,0.03,Cape Verde,IRENA 2023 via PV Magazine - https://www.pv-magazine.com/2024/11/14/cape-verde-runs-tender-for-10-mw-of-solar/
-CAF,0.04,Central African Republic,https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/
-COM,0.0,Comoros,IRENA 2023 via PVKnowhow - https://www.pvknowhow.com/solar-report/comoros/
-DJI,0.0,Djibouti,https://ember-energy.org/latest-insights/global-electricity-review-2025/
-ERI,0.02,Eritrea,https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/
-SWZ,0.03,Eswatini,https://www.globalsolarcouncil.org/news/global-solar-council-africas-solar-market-set-to-surge-42-in-2025-but-finance-bottlenecks-threaten-growth/
-GAB,0.01,Gabon,https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/
-GMB,0.02,Gambia,https://www.pv-magazine.com/2023/02/10/gambia-inaugurates-23-mw-pv-plant/
-GNQ,0.0,Equatorial Guinea,https://www.ren21.net/gsr-2025/downloads/pdf/go/GSR_2025_GO_2025_Full_Report.pdf
-GIN,0.02,Guinea,https://ember-energy.org/latest-insights/global-electricity-review-2025/
-GNB,0.0,Guinea-Bissau,https://www.ren21.net/gsr-2025/downloads/pdf/go/GSR_2025_GO_2025_Full_Report.pdf
-CIV,0.04,Ivory Coast,https://ember-energy.org/latest-insights/global-electricity-review-2025/
-LSO,0.03,Lesotho,https://ember-energy.org/latest-insights/global-electricity-review-2025/
-MRT,0.16,Mauritania,https://ember-energy.org/latest-insights/global-electricity-review-2025/
-MWI,0.11,Malawi,https://www.ren21.net/gsr-2025/downloads/pdf/go/GSR_2025_GO_2025_Full_Report.pdf
-STP,0.0,Sao Tome and Principe,World Bank National Energy Compact 2025 - https://thedocs.worldbank.org/en/doc/680a427c0554b887598d86080fdcc775-0010012025/original/Sao-Tome-National-Energy-Compact-Mission-300.pdf
-SLE,0.02,Sierra Leone,https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/
-SOM,0.05,Somalia,https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/
-SSD,0.03,South Sudan,Combined: PVKnowhow 2025 (38.4 MW total) - https://www.pvknowhow.com/solar-report/south-sudan/
-SYC,0.02,Seychelles,PVKnowhow 2024 Report - https://www.pvknowhow.com/solar-report/seychelles/
-TCD,0.0,Chad,https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/
-ALB,0.31,Albania,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-COD,0.03,Democratic Republic of Congo,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-CUB,0.29,Cuba,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-GHA,0.19,Ghana,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-GTM,0.1,Guatemala,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-HND,0.55,Honduras,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-IDN,0.82,Indonesia,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-IRQ,0.04,Iraq,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-ISR,5.61,Israel,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-JOR,2.08,Jordan,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-LBN,1.08,Lebanon,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-MLI,0.14,Mali,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-MUS,0.14,Mauritius,Ministry of Energy Annual Report 2023-2024 - https://publicutilities.govmu.org/Documents/Annual%20Report2023-2024.pdf
-NAM,0.24,Namibia,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-NPL,0.18,Nepal,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-PAN,0.74,Panama,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-SDN,0.19,Sudan,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-SGP,1.16,Singapore,Energy Market Authority Singapore 2024 - https://ema.gov.sg/resources/singapore-energy-statistics/chapter6
-TGO,0.07,Togo,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-UZB,2.27,Uzbekistan,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-YEM,0.4,Yemen,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-ZMB,0.2,Zambia,Wikipedia (Ember 2024 data) - https://en.wikipedia.org/wiki/Solar_power_by_country
-ETH,0.02,Ethiopia,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-LBY,0.01,Libya,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-MDG,0.06,Madagascar,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-MOZ,0.11,Mozambique,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-RWA,0.03,Rwanda,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-TZA,0.02,Tanzania,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-UGA,0.08,Uganda,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-ZWE,0.11,Zimbabwe,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-AFG,0.05,Afghanistan,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-BHR,0.07,Bahrain,IEA Report 2024 via SAU Energy - https://www.saurenergy.me/emerging-middle-eastern-nations-to-advance-re-goals/
-BTN,0.0,Bhutan,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
+ARG,1.74,Argentina,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+ARM,0.49,Armenia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+AUS,38.47,Australia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+AUT,8.48,Austria,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+AZE,0.29,Azerbaijan,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+BGD,0.85,Bangladesh,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+BLR,0.26,Belarus,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+BEL,9.75,Belgium,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+BOL,0.18,Bolivia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+BIH,0.21,Bosnia Herzegovina,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+BRA,53.11,Brazil,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+BGR,3.91,Bulgaria,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+KHM,0.88,Cambodia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+CAN,6.11,Canada,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+CHL,11.05,Chile,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+CHN,887.93,China,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+COL,1.39,Colombia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+CRI,0.07,Costa Rica,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+HRV,0.86,Croatia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+CYP,0.72,Cyprus,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+CZE,4.16,Czechia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+DNK,3.94,Denmark,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+DOM,1.42,Dominican Republic (the),[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+ECU,0.03,Ecuador,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+EGY,2.59,Egypt,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+SLV,0.65,El Salvador,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+EST,1.33,Estonia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+FIN,1.2,Finland,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+FRA,21.53,France,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+GEO,0.13,Georgia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+DEU,89.94,Germany,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+GRC,9.27,Greece,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+HUN,7.7,Hungary,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+IND,97.38,India,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+IRN,0.78,Iran (Islamic Republic of),[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+IRL,1.34,Ireland,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+ITA,36.01,Italy,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+JPN,91.61,Japan,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+KAZ,1.2,Kazakhstan,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+KEN,0.37,Kenya,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+KWT,0.1,Kuwait,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+LVA,0.47,Latvia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+LTU,2.57,Lithuania,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+LUX,0.52,Luxembourg,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+MYS,2.31,Malaysia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+MLT,0.23,Malta,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+MEX,11.99,Mexico,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+MDA,0.34,Moldova,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+MNG,0.14,Mongolia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+MNE,0.03,Montenegro,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+MAR,0.93,Morocco,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+MMR,0.22,Myanmar,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+NLD,24.05,Netherlands,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+NZL,0.57,New Zealand,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+NGA,0.14,Nigeria,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+MKD,0.83,North Macedonia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+NOR,0.8,Norway,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+OMN,0.67,Oman,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+PAK,1.4,Pakistan,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+PER,0.53,Peru,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+PHL,2.97,Philippines (the),[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+POL,20.2,Poland,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+PRT,5.81,Portugal,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+PRI,0.96,Puerto Rico,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+QAT,1.68,Qatar,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+ROU,4.69,Romania,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+RUS,2.55,Russian Federation (the),[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+SAU,4.34,Saudi Arabia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+SRB,0.24,Serbia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+SVK,0.87,Slovakia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+SVN,1.31,Slovenia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+ZAF,6.67,South Africa,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+KOR,26.65,South Korea,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+ESP,38.59,Spain,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+LKA,1.45,Sri Lanka,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+SWE,4.96,Sweden,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+CHE,7.79,Switzerland,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+TWN,14.28,Taiwan,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+THA,3.38,Thailand,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+TUN,0.77,Tunisia,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+TUR,19.88,Turkey,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+ARE,6.01,United Arab Emirates,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+GBR,17.6,United Kingdom,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+USA,177.47,United States of America,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+URY,0.33,Uruguay,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+VNM,18.67,Viet Nam,[Ember](https://ember-climate.org/data-catalogue/yearly-electricity-data/)
+UKR,5.5,Ukraine,[Wikipedia](https://en.wikipedia.org/wiki/Solar_power_by_country)
+TJK,0.0,Tajikistan,[CABAR.asia 2024 (600 kW USAID project)](https://cabar.asia/en/tajikistan-solar-energy-in-support-of-hydropower-plants)
+TKM,0.0,Turkmenistan,[UNDP 2012 Report](https://www.undp.org/sites/g/files/zskgke326/files/migration/eurasia/Turkmenistan.pdf)
+TLS,0.0,Timor-Leste,[Asian Development Bank sector assessment 2016-2020](https://www.adb.org/sites/default/files/linked-documents/cps-tim-2016-2020-ssa-05.pdf)
+DZA,0.46,Algeria,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+SEN,0.27,Senegal,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+AGO,0.36,Angola,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+BEN,0.04,Benin,[ember-energy.org](https://ember-energy.org/latest-insights/global-electricity-review-2025/)
+BFA,0.21,Burkina Faso,[ember-energy.org](https://ember-energy.org/latest-insights/global-electricity-review-2025/)
+BDI,0.01,Burundi,[ember-energy.org](https://ember-energy.org/latest-insights/global-electricity-review-2025/)
+CMR,0.06,Cameroon,[ember-energy.org](https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/)
+CPV,0.03,Cape Verde,[IRENA 2023 via PV Magazine](https://www.pv-magazine.com/2024/11/14/cape-verde-runs-tender-for-10-mw-of-solar/)
+CAF,0.04,Central African Republic,[ember-energy.org](https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/)
+COM,0.0,Comoros,[IRENA 2023 via PVKnowhow](https://www.pvknowhow.com/solar-report/comoros/)
+DJI,0.0,Djibouti,[ember-energy.org](https://ember-energy.org/latest-insights/global-electricity-review-2025/)
+ERI,0.02,Eritrea,[ember-energy.org](https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/)
+SWZ,0.03,Eswatini,[globalsolarcouncil.org](https://www.globalsolarcouncil.org/news/global-solar-council-africas-solar-market-set-to-surge-42-in-2025-but-finance-bottlenecks-threaten-growth/)
+GAB,0.01,Gabon,[ember-energy.org](https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/)
+GMB,0.02,Gambia,[pv-magazine.com](https://www.pv-magazine.com/2023/02/10/gambia-inaugurates-23-mw-pv-plant/)
+GNQ,0.0,Equatorial Guinea,[ren21.net](https://www.ren21.net/gsr-2025/downloads/pdf/go/GSR_2025_GO_2025_Full_Report.pdf)
+GIN,0.02,Guinea,[ember-energy.org](https://ember-energy.org/latest-insights/global-electricity-review-2025/)
+GNB,0.0,Guinea-Bissau,[ren21.net](https://www.ren21.net/gsr-2025/downloads/pdf/go/GSR_2025_GO_2025_Full_Report.pdf)
+CIV,0.04,Ivory Coast,[ember-energy.org](https://ember-energy.org/latest-insights/global-electricity-review-2025/)
+LSO,0.03,Lesotho,[ember-energy.org](https://ember-energy.org/latest-insights/global-electricity-review-2025/)
+MRT,0.16,Mauritania,[ember-energy.org](https://ember-energy.org/latest-insights/global-electricity-review-2025/)
+MWI,0.11,Malawi,[ren21.net](https://www.ren21.net/gsr-2025/downloads/pdf/go/GSR_2025_GO_2025_Full_Report.pdf)
+STP,0.0,Sao Tome and Principe,[World Bank National Energy Compact 2025](https://thedocs.worldbank.org/en/doc/680a427c0554b887598d86080fdcc775-0010012025/original/Sao-Tome-National-Energy-Compact-Mission-300.pdf)
+SLE,0.02,Sierra Leone,[ember-energy.org](https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/)
+SOM,0.05,Somalia,[ember-energy.org](https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/)
+SSD,0.03,South Sudan,[Combined: PVKnowhow 2025 (38.4 MW total)](https://www.pvknowhow.com/solar-report/south-sudan/)
+SYC,0.02,Seychelles,[PVKnowhow 2024 Report](https://www.pvknowhow.com/solar-report/seychelles/)
+TCD,0.0,Chad,[ember-energy.org](https://ember-energy.org/latest-insights/the-first-evidence-of-a-take-off-in-solar-in-africa/)
+ALB,0.31,Albania,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+COD,0.03,Democratic Republic of Congo,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+CUB,0.29,Cuba,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+GHA,0.19,Ghana,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+GTM,0.1,Guatemala,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+HND,0.55,Honduras,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+IDN,0.82,Indonesia,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+IRQ,0.04,Iraq,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+ISR,5.61,Israel,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+JOR,2.08,Jordan,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+LBN,1.08,Lebanon,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+MLI,0.14,Mali,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+MUS,0.14,Mauritius,[Ministry of Energy Annual Report 2023-2024](https://publicutilities.govmu.org/Documents/Annual%20Report2023-2024.pdf)
+NAM,0.24,Namibia,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+NPL,0.18,Nepal,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+PAN,0.74,Panama,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+SDN,0.19,Sudan,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+SGP,1.16,Singapore,[Energy Market Authority Singapore 2024](https://ema.gov.sg/resources/singapore-energy-statistics/chapter6)
+TGO,0.07,Togo,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+UZB,2.27,Uzbekistan,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+YEM,0.4,Yemen,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+ZMB,0.2,Zambia,[Wikipedia (Ember 2024 data)](https://en.wikipedia.org/wiki/Solar_power_by_country)
+ETH,0.02,Ethiopia,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+LBY,0.01,Libya,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+MDG,0.06,Madagascar,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+MOZ,0.11,Mozambique,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+RWA,0.03,Rwanda,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+TZA,0.02,Tanzania,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+UGA,0.08,Uganda,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+ZWE,0.11,Zimbabwe,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+AFG,0.05,Afghanistan,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+BHR,0.07,Bahrain,[IEA Report 2024 via SAU Energy](https://www.saurenergy.me/emerging-middle-eastern-nations-to-advance-re-goals/)
+BTN,0.0,Bhutan,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
 BWA,0.01,Botswana,www.pv-magazine.com/
-COG,0.0,Congo,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-NER,0.08,Niger,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-LBR,0.0,Liberia,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-ESH,0.1,Western Sahara,WSRW Report 2024 - https://wsrw.org/en/news/renewable-energy
-HKG,0.33,Hong Kong,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-PRK,0.14,North Korea,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-MDV,0.07,Maldives,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-PSE,0.2,Palestine,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-BRN,0.01,Brunei,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-SYR,0.06,Syria,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-LAO,0.06,Laos,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-KGZ,0.0,Kyrgyzstan,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-ATG,0.02,Antigua and Barbuda,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-BRB,0.07,Barbados,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-DMA,0.0,Dominica,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-GRD,0.0,Grenada,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-KNA,0.0,Saint Kitts and Nevis,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-LCA,0.0,Saint Lucia,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-VCT,0.0,Saint Vincent and the Grenadines,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-BHS,0.02,Bahamas,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-HTI,0.0,Haiti,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-JAM,0.12,Jamaica,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-TTO,0.0,Trinidad and Tobago,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-FJI,0.01,Fiji,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-PNG,0.0,Papua New Guinea,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-SLB,0.01,Solomon Islands,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-VUT,0.0,Vanuatu,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-WSM,0.02,Samoa,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-TON,0.02,Tonga,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-FSM,0.01,Micronesia,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-PLW,0.02,Palau,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-KIR,0.0,Kiribati,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-NRU,0.0,Nauru,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-TUV,0.0,Tuvalu,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-MHL,0.0,Marshall Islands,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-COK,0.01,Cook Islands,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-PYF,0.07,French Polynesia,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-NIU,0.0,Niue,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-ASM,0.01,American Samoa,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-GUM,0.1,Guam,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-TKL,0.0,Tokelau,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-PRY,0.0,Paraguay,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-SUR,0.01,Suriname,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-VEN,0.0,Venezuela,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-GUY,0.02,Guyana,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-BLZ,0.01,Belize,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-NIC,0.04,Nicaragua,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-AND,0.01,Andorra,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-ISL,0.01,Iceland,Our World in Data - https://ourworldindata.org/grapher/installed-solar-pv-capacity
-ATA,0.0002,Antarctica,British Antarctic Survey renewable projects 2025 - https://www.bas.ac.uk/media-post/renewables-milestone-reached-in-antarctica/
-ATF,0.0032,French Southern and Antarctic Lands,green-overseas.org & TAAF renewable energy installations - http://www.green-overseas.org/en/pays-et-territoires/french-southern-and-antarctic-lands
-FLK,0.0,Falkland Islands,Falkland Islands Energy Strategy & green-overseas.org - https://www.green-overseas.org/en/pays-et-territoires/falkland-islands
-GRL,0.0,Greenland,World Population Review 2025 - https://worldpopulationreview.com/country-rankings/solar-power-by-country
-NCL,0.21,New Caledonia,World Population Review 2025 - https://worldpopulationreview.com/country-rankings/solar-power-by-country
+COG,0.0,Congo,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+NER,0.08,Niger,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+LBR,0.0,Liberia,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+ESH,0.1,Western Sahara,[WSRW Report 2024](https://wsrw.org/en/news/renewable-energy)
+HKG,0.33,Hong Kong,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+PRK,0.14,North Korea,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+MDV,0.07,Maldives,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+PSE,0.2,Palestine,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+BRN,0.01,Brunei,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+SYR,0.06,Syria,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+LAO,0.06,Laos,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+KGZ,0.0,Kyrgyzstan,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+ATG,0.02,Antigua and Barbuda,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+BRB,0.07,Barbados,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+DMA,0.0,Dominica,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+GRD,0.0,Grenada,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+KNA,0.0,Saint Kitts and Nevis,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+LCA,0.0,Saint Lucia,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+VCT,0.0,Saint Vincent and the Grenadines,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+BHS,0.02,Bahamas,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+HTI,0.0,Haiti,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+JAM,0.12,Jamaica,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+TTO,0.0,Trinidad and Tobago,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+FJI,0.01,Fiji,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+PNG,0.0,Papua New Guinea,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+SLB,0.01,Solomon Islands,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+VUT,0.0,Vanuatu,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+WSM,0.02,Samoa,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+TON,0.02,Tonga,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+FSM,0.01,Micronesia,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+PLW,0.02,Palau,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+KIR,0.0,Kiribati,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+NRU,0.0,Nauru,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+TUV,0.0,Tuvalu,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+MHL,0.0,Marshall Islands,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+COK,0.01,Cook Islands,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+PYF,0.07,French Polynesia,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+NIU,0.0,Niue,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+ASM,0.01,American Samoa,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+GUM,0.1,Guam,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+TKL,0.0,Tokelau,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+PRY,0.0,Paraguay,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+SUR,0.01,Suriname,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+VEN,0.0,Venezuela,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+GUY,0.02,Guyana,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+BLZ,0.01,Belize,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+NIC,0.04,Nicaragua,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+AND,0.01,Andorra,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+ISL,0.01,Iceland,[Our World in Data](https://ourworldindata.org/grapher/installed-solar-pv-capacity)
+ATA,0.0002,Antarctica,[British Antarctic Survey renewable projects 2025](https://www.bas.ac.uk/media-post/renewables-milestone-reached-in-antarctica/)
+ATF,0.0032,French Southern and Antarctic Lands,[green-overseas.org & TAAF renewable energy installations](http://www.green-overseas.org/en/pays-et-territoires/french-southern-and-antarctic-lands)
+FLK,0.0,Falkland Islands,[Falkland Islands Energy Strategy & green-overseas.org](https://www.green-overseas.org/en/pays-et-territoires/falkland-islands)
+GRL,0.0,Greenland,[World Population Review 2025](https://worldpopulationreview.com/country-rankings/solar-power-by-country)
+NCL,0.21,New Caledonia,[World Population Review 2025](https://worldpopulationreview.com/country-rankings/solar-power-by-country)
