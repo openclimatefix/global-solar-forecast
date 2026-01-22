@@ -425,6 +425,8 @@ def docs_page() -> None:
 
 def capacities_page() -> None:
     """Solar capacities page."""
+    import re
+
     st.header("Solar Capacities")
     st.write("This page shows the solar capacities per country.")
     solar_capacity_per_country_df = pd.read_csv(
@@ -435,7 +437,48 @@ def capacities_page() -> None:
     solar_capacity_per_country_df.dropna(subset=["temp"], inplace=True)
     solar_capacity_per_country_df.drop(columns=["temp"], inplace=True)
 
-    st.dataframe(solar_capacity_per_country_df)
+    # Parse markdown links [text](url) into separate columns for display
+    def parse_markdown_link(source: str) -> tuple[str, str]:
+        """Extract text and URL from markdown link format."""
+        if pd.isna(source):
+            return ("", "")
+        match = re.match(r"\[([^\]]+)\]\(([^)]+)\)", str(source))
+        if match:
+            return (match.group(1), match.group(2))
+        # If not markdown format, return as-is
+        return (str(source), "")
+
+    # Create source_name and source_url columns
+    parsed = solar_capacity_per_country_df["source"].apply(parse_markdown_link)
+    solar_capacity_per_country_df["source_name"] = parsed.apply(lambda x: x[0])
+    solar_capacity_per_country_df["source_url"] = parsed.apply(lambda x: x[1])
+
+    # Create HTML clickable links for source column
+    def create_source_link(row: pd.Series) -> str:
+        """Create HTML link with source name as clickable text."""
+        name = row["source_name"]
+        url = row["source_url"]
+        if url:
+            return f'<a href="{url}" target="_blank">{name}</a>'
+        return name
+
+    solar_capacity_per_country_df["source_link"] = solar_capacity_per_country_df.apply(
+        create_source_link, axis=1
+    )
+
+    # Create display dataframe with country_code as proper column
+    display_df = solar_capacity_per_country_df[
+        ["capacity_gw", "country_name", "source_link"]
+    ].copy()
+    display_df = display_df.reset_index()  # Move country_code from index to column
+    display_df.columns = ["Country Code", "Capacity (GW)", "Country", "Source"]
+
+    # Display as HTML table with clickable links
+    st.markdown(
+        display_df.to_html(escape=False, index=False),
+        unsafe_allow_html=True,
+    )
+
 
 
 if __name__ == "__main__":
