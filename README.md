@@ -6,7 +6,7 @@
  
 [![workflows badge](https://img.shields.io/github/actions/workflow/status/openclimatefix/global-solar-forecast/ci.yml?branch=maine&color=FFD053&label=workflow)](https://github.com/openclimatefix/global-solar-forecast/actions/workflows/ci.yml)
 [![tags badge](https://img.shields.io/github/v/tag/openclimatefix/global-solar-forecast?include_prereleases&sort=semver&color=FFAC5F)](https://github.com/openclimatefix/global-solar-forecast/tags)
-[![documentation badge](https://img.shields.io/badge/docs-latest-086788)](https://openclimatefix.github.io/global-solar-forecast/)
+[![documentation badge](https://img.shields.io/badge/docs-latest-086788)](https://www.openclimatefix.org/work/solar-forecasting)
 [![contributors badge](https://img.shields.io/github/contributors/openclimatefix/global-solar-forecast?color=FFFFFF)](https://github.com/openclimatefix/global-solar-forecast/graphs/contributors)
 
 [![ease of contribution: medium](https://img.shields.io/badge/ease%20of%20contribution:%20medium-f4900c)](https://github.com/openclimatefix/ocf-meta-repo?tab=readme-ov-file#how-easy-is-it-to-get-involved)
@@ -97,8 +97,8 @@ Current there are not tests, but it would be great if some were added
 [![issues badge](https://img.shields.io/github/issues/openclimatefix/global-solar-forecast?color=FFAC5F)](https://github.com/openclimatefix/global-solar-forecast/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)
 
 - PR's are welcome! See the [Organisation Profile](https://github.com/openclimatefix) for details on contributing
-- Find out about our other projects in the [here](https://github.com/openclimatefix/.github/tree/main/profile)
-- Check out the [OCF blog](https://openclimatefix.org/blog) for updates
+- Find out about our other projects in the [here](https://github.com/openclimatefix/.github/tree/main/profile#overview-of-ocfs-repositories)
+- Check out the [OCF blog](https://www.openclimatefix.org/insights?category=blog) for updates
 - Follow OCF on [LinkedIn](https://uk.linkedin.com/company/open-climate-fix)
 
 
