@@ -13,11 +13,9 @@
 
 ⚠️ This project is a working-in-progress
 
-This aim of this project is about making a global solar forecast. We want to make a 0-48 hours forecast for every country in the world. 
+This aim of this project is to make a global solar forecast: a 0-48 hours forecast for every country in the world. We get the solar capacity for every country (mainly collected from Ember and Our World in Data and added in manually), and then create a solar forecast, displayed in the UI in various charts.
 
-We need to get the solar capacity for every countries, and then create a solar forecast.
-
-We get the **solar capacities** from mainly from Ember and add a few in manually. 
+We've presented Global Solar Forecast at **FOSDEM 2026**, talking about why we built it, how it works, and how we hope for it to develop. [Watch the talk](https://video.fosdem.org/2026/aw1126/M3TKEE-ocf-global-solar-forecast.av1.webm)
 
 The **solar forecast** is very simple, 
 - as it assume one solar panel in the middle of the country, 
