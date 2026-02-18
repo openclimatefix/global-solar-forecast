@@ -10,9 +10,15 @@ import pandas as pd
 import plotly.graph_objects as go
 import pycountry
 import streamlit as st
-from constants import ocf_palette
+from constants import (
+    CHART_LEGEND_CONFIG,
+    FORECAST_LINE_STYLE,
+    SEASONAL_NORM_LINE_STYLE,
+    ocf_palette,
+)
 from country import country_page
 from forecast import get_forecast
+from seasonal_norm import aggregate_seasonal_norms_for_countries
 
 data_dir = "src/v1/data"
 
@@ -88,6 +94,8 @@ def main_page() -> None:
 
     # run forecast for each country
     forecast_per_country: dict[str, pd.DataFrame] = {}
+    country_coords: dict[str, tuple[float, float]] = {}
+    country_names: dict[str, str] = {}
     my_bar = st.progress(0)
     countries = list(pycountry.countries)
     for i in range(len(countries)):
@@ -143,6 +151,8 @@ def main_page() -> None:
                 )
 
             forecast_per_country[country.alpha_3] = forecast
+            country_coords[country.alpha_3] = (lat, lon)
+            country_names[country.alpha_3] = country.name
 
     my_bar.progress(100, "Loaded all forecasts.")
     my_bar.empty()
@@ -166,6 +176,10 @@ def main_page() -> None:
         "Of course this number is always changing so please see the `Capacities` tab "
         "for actual the numbers we have used. ",
     )
+
+    # Add option to show seasonal norm
+    show_norm = st.checkbox("Show seasonal norm", value=False)
+
     # Toggle to show stacked chart (top N countries + Other)
     show_stacked = st.checkbox(
         "Show stacked global chart (top 10 countries)",
@@ -173,18 +187,46 @@ def main_page() -> None:
     )
 
     if not show_stacked:
-        fig = go.Figure(
-            data=go.Scatter(
+        # Calculate seasonal norm by aggregating all countries
+        seasonal_norm_df = aggregate_seasonal_norms_for_countries(
+            forecast_per_country,
+            solar_capacity_per_country,
+            country_coords,
+            country_names,
+        )
+
+        fig = go.Figure()
+
+        # Add forecast line
+        fig.add_trace(
+            go.Scatter(
                 x=total_forecast["timestamp"],
                 y=total_forecast["power_gw"],
-                marker_color=ocf_palette[0],
+                name="Forecast",
+                line=FORECAST_LINE_STYLE,
+                mode="lines",
             ),
         )
+
+        # Add seasonal norm line if requested
+        if show_norm:
+            fig.add_trace(
+                go.Scatter(
+                    x=seasonal_norm_df.index,
+                    y=seasonal_norm_df["power_gw_norm"],
+                    name="Seasonal Norm",
+                    line=SEASONAL_NORM_LINE_STYLE,
+                    mode="lines",
+                ),
+            )
+
         fig.update_layout(
             yaxis_title="Power [GW]",
             xaxis_title="Time (UTC)",
             yaxis_range=[0, None],
             title="Global Solar Power Forecast",
+            hovermode="x unified",
+            legend=CHART_LEGEND_CONFIG,
         )
         st.plotly_chart(fig)
     else:
