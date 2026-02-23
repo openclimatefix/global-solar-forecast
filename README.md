@@ -6,7 +6,6 @@
  
 [![workflows badge](https://img.shields.io/github/actions/workflow/status/openclimatefix/global-solar-forecast/ci.yml?branch=maine&color=FFD053&label=workflow)](https://github.com/openclimatefix/global-solar-forecast/actions/workflows/ci.yml)
 [![tags badge](https://img.shields.io/github/v/tag/openclimatefix/global-solar-forecast?include_prereleases&sort=semver&color=FFAC5F)](https://github.com/openclimatefix/global-solar-forecast/tags)
-[![documentation badge](https://img.shields.io/badge/docs-latest-086788)](https://www.openclimatefix.org/work/solar-forecasting)
 [![contributors badge](https://img.shields.io/github/contributors/openclimatefix/global-solar-forecast?color=FFFFFF)](https://github.com/openclimatefix/global-solar-forecast/graphs/contributors)
 
 [![ease of contribution: medium](https://img.shields.io/badge/ease%20of%20contribution:%20medium-f4900c)](https://github.com/openclimatefix/ocf-meta-repo?tab=readme-ov-file#how-easy-is-it-to-get-involved)
