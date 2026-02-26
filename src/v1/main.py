@@ -489,11 +489,14 @@ def capacities_page() -> None:
     display_df = display_df.reset_index()  # Move country_code from index to column
     display_df.columns = ["Country Code", "Capacity (GW)", "Country", "Source"]
 
+    # initial presort by Capacity
+    display_df = display_df.sort_values(by="Capacity (GW)", ascending=False)
+
     # Display the dataframe with the custom LinkColumn and no scroll container
     st.dataframe(
         display_df,
         hide_index=True,
-        use_container_width=True,  # Spreads the table nicely across the page
+        width="stretch",  # Spreads the table nicely across the page
         height="content",  # Removes the scrollable container box
         column_config={
             "Source": st.column_config.LinkColumn(
