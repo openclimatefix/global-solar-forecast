@@ -422,21 +422,6 @@ def docs_page() -> None:
     faqs = Path("./FAQ.md").read_text()
     st.markdown(faqs)
 
-def format_html_link(html_str):
-    if not isinstance(html_str, str) or "<a " not in html_str:
-        return html_str
-
-    # Extract the URL and the inner text
-    url_match = re.search(r'href="([^"]+)"', html_str)
-    text_match = re.search(r">([^<]+)</a>", html_str)
-
-    if url_match and text_match:
-        url = url_match.group(1)
-        text = text_match.group(1)
-        # Combine them: URL#TEXT
-        return f"{url}#{text}"
-    return html_str
-
 
 def capacities_page() -> None:
     """Solar capacities page."""
