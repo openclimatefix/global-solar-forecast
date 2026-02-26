@@ -422,6 +422,21 @@ def docs_page() -> None:
     faqs = Path("./FAQ.md").read_text()
     st.markdown(faqs)
 
+def format_html_link(html_str):
+    if not isinstance(html_str, str) or "<a " not in html_str:
+        return html_str
+
+    # Extract the URL and the inner text
+    url_match = re.search(r'href="([^"]+)"', html_str)
+    text_match = re.search(r'>([^<]+)</a>', html_str)
+
+    if url_match and text_match:
+        url = url_match.group(1)
+        text = text_match.group(1)
+        # Combine them: URL#TEXT
+        return f"{url}#{text}"
+    return html_str
+
 
 def capacities_page() -> None:
     """Solar capacities page."""
@@ -455,11 +470,12 @@ def capacities_page() -> None:
 
     # Create HTML clickable links for source column
     def create_source_link(row: pd.Series) -> str:
-        """Create HTML link with source name as clickable text."""
+        """Create URL#TEXT format for Streamlit LinkColumn."""
         name = row["source_name"]
         url = row["source_url"]
         if url:
-            return f'<a href="{url}" target="_blank">{name}</a>'
+            # Changed from to the hash format Streamlit needs
+            return f"{url}#{name}"
         return name
 
     solar_capacity_per_country_df["source_link"] = solar_capacity_per_country_df.apply(
@@ -473,11 +489,20 @@ def capacities_page() -> None:
     display_df = display_df.reset_index()  # Move country_code from index to column
     display_df.columns = ["Country Code", "Capacity (GW)", "Country", "Source"]
 
-    # Display as HTML table with clickable links
-    st.markdown(
-        display_df.to_html(escape=False, index=False),
-        unsafe_allow_html=True,
+    # Display the dataframe with the custom LinkColumn and no scroll container
+    st.dataframe(
+        display_df,
+        hide_index=True,
+        use_container_width=True,  # Spreads the table nicely across the page
+        height="content",  # Removes the scrollable container box
+        column_config={
+            "Source": st.column_config.LinkColumn(
+                "Source",
+                display_text=r".*#(.*)"
+            )
+        }
     )
+
 
 
 
