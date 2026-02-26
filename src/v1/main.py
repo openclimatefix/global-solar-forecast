@@ -428,7 +428,7 @@ def format_html_link(html_str):
 
     # Extract the URL and the inner text
     url_match = re.search(r'href="([^"]+)"', html_str)
-    text_match = re.search(r'>([^<]+)</a>', html_str)
+    text_match = re.search(r">([^<]+)</a>", html_str)
 
     if url_match and text_match:
         url = url_match.group(1)
@@ -479,7 +479,7 @@ def capacities_page() -> None:
         return name
 
     solar_capacity_per_country_df["source_link"] = solar_capacity_per_country_df.apply(
-        create_source_link, axis=1
+        create_source_link, axis=1,
     )
 
     # Create display dataframe with country_code as proper column
@@ -501,9 +501,9 @@ def capacities_page() -> None:
         column_config={
             "Source": st.column_config.LinkColumn(
                 "Source",
-                display_text=r".*#(.*)"
-            )
-        }
+                display_text=r".*#(.*)",
+            ),
+        },
     )
 
 
