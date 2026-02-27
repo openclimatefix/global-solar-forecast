@@ -78,9 +78,18 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jasondrury22",
+      "name": "Jason Drury",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18755314?v=4&size=64",
+      "profile": "https://github.com/jasondrury22",
+      "contributions": [
+        "code"
+      ]
     }
   ],
-  "contributorsPerLine": 7,
+  "contributorsPerLine": 8,
   "skipCi": true,
   "repoType": "github",
   "repoHost": "https://github.com",
