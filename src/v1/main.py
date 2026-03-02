@@ -459,7 +459,7 @@ def capacities_page() -> None:
         name = str(row["source_name"])
         url = str(row["source_url"])
         if url and url != "None" and url != "":
-            # Changed from to the hash format Streamlit needs
+            # Use the hash format Streamlit's LinkColumn expects
             return f"{url}#{name}"
         return name
 
