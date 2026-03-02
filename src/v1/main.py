@@ -438,13 +438,13 @@ def capacities_page() -> None:
     solar_capacity_per_country_df.drop(columns=["temp"], inplace=True)
 
     # Parse markdown links [text](url) into separate columns for display
-    def parse_markdown_link(source: str) -> tuple[str, str]:
+    def parse_markdown_link(source: str | float | None) -> tuple[str, str]:
         """Extract text and URL from markdown link format."""
         if pd.isna(source):
             return ("", "")
         match = re.match(r"\[([^\]]+)\]\(([^)]+)\)", str(source))
         if match:
-            return (match.group(1), match.group(2))
+            return (str(match.group(1)), str(match.group(2)))
         # If not markdown format, return as-is
         return (str(source), "")
 
@@ -456,9 +456,9 @@ def capacities_page() -> None:
     # Create HTML clickable links for source column
     def create_source_link(row: pd.Series) -> str:
         """Create URL#TEXT format for Streamlit LinkColumn."""
-        name = row["source_name"]
-        url = row["source_url"]
-        if url:
+        name = str(row["source_name"])
+        url = str(row["source_url"])
+        if url and url != "None" and url != "":
             # Changed from to the hash format Streamlit needs
             return f"{url}#{name}"
         return name
