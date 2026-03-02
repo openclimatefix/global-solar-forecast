@@ -453,7 +453,7 @@ def capacities_page() -> None:
     solar_capacity_per_country_df["source_name"] = parsed.apply(lambda x: x[0])
     solar_capacity_per_country_df["source_url"] = parsed.apply(lambda x: x[1])
 
-    # Create HTML clickable links for source column
+    # Create LinkColumn-compatible values (URL#TEXT) for source column
     def create_source_link(row: pd.Series) -> str:
         """Create URL#TEXT format for Streamlit LinkColumn."""
         name = str(row["source_name"])
