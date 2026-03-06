@@ -438,13 +438,13 @@ def capacities_page() -> None:
     solar_capacity_per_country_df.drop(columns=["temp"], inplace=True)
 
     # Parse markdown links [text](url) into separate columns for display
-    def parse_markdown_link(source: str) -> tuple[str, str]:
+    def parse_markdown_link(source: str | float | None) -> tuple[str, str]:
         """Extract text and URL from markdown link format."""
         if pd.isna(source):
             return ("", "")
         match = re.match(r"\[([^\]]+)\]\(([^)]+)\)", str(source))
         if match:
-            return (match.group(1), match.group(2))
+            return (str(match.group(1)), str(match.group(2)))
         # If not markdown format, return as-is
         return (str(source), "")
 
@@ -453,17 +453,18 @@ def capacities_page() -> None:
     solar_capacity_per_country_df["source_name"] = parsed.apply(lambda x: x[0])
     solar_capacity_per_country_df["source_url"] = parsed.apply(lambda x: x[1])
 
-    # Create HTML clickable links for source column
+    # Create LinkColumn-compatible values (URL#TEXT) for source column
     def create_source_link(row: pd.Series) -> str:
-        """Create HTML link with source name as clickable text."""
-        name = row["source_name"]
-        url = row["source_url"]
-        if url:
-            return f'<a href="{url}" target="_blank">{name}</a>'
+        """Create URL#TEXT format for Streamlit LinkColumn."""
+        name = str(row["source_name"])
+        url = str(row["source_url"])
+        if url and url != "None" and url != "":
+            # Use the hash format Streamlit's LinkColumn expects
+            return f"{url}#{name}"
         return name
 
     solar_capacity_per_country_df["source_link"] = solar_capacity_per_country_df.apply(
-        create_source_link, axis=1
+        create_source_link, axis=1,
     )
 
     # Create display dataframe with country_code as proper column
@@ -473,11 +474,23 @@ def capacities_page() -> None:
     display_df = display_df.reset_index()  # Move country_code from index to column
     display_df.columns = ["Country Code", "Capacity (GW)", "Country", "Source"]
 
-    # Display as HTML table with clickable links
-    st.markdown(
-        display_df.to_html(escape=False, index=False),
-        unsafe_allow_html=True,
+    # initial presort by Capacity
+    display_df = display_df.sort_values(by="Capacity (GW)", ascending=False)
+
+    # Display the dataframe with the custom LinkColumn and no scroll container
+    st.dataframe(
+        display_df,
+        hide_index=True,
+        width="stretch",  # Spreads the table nicely across the page
+        height="content",  # Removes the scrollable container box
+        column_config={
+            "Source": st.column_config.LinkColumn(
+                "Source",
+                display_text=r".*#(.*)",
+            ),
+        },
     )
+
 
 
 

@@ -45,6 +45,7 @@ dev = [
     "pylsp-mypy",
     "python-lsp-ruff",
     "scipy-stubs",
+    "types-pytz>=2025.2.0.20251108",
 ]
 
 [project.scripts]
