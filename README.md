@@ -22,7 +22,7 @@ The **solar forecast** is very simple,
 - We use `open.quartz.solar` which is for domestic solar, and uses free weather forecasts. 
 
 ![image](./dashboard1.png)
-![image](./dashboard2.png)
+![image](./dashboard-globe.png)
 
 ## How It Works
 
