@@ -495,58 +495,10 @@ def capacities_page() -> None:
 
 
 if __name__ == "__main__":
-    # Compact header styling
-    st.markdown(
-        """
-        <style>
-            @font-face {
-                font-family: 'MatterXH';
-                src: url("https://www.openclimatefix.org/_next/static/media/ff26d691274c557e-s.p.woff2") format("woff2");
-                font-display: swap;
-                font-weight: 300;
-                font-style: normal;
-            }
-            @font-face {
-                font-family: 'MatterXH';
-                src: url("https://www.openclimatefix.org/_next/static/media/1f1458619779bfe1-s.p.woff2") format("woff2");
-                font-display: swap;
-                font-weight: 400;
-                font-style: normal;
-            }
-            @font-face {
-                font-family: 'MatterXH';
-                src: url("https://www.openclimatefix.org/_next/static/media/fb07625001d8a40d-s.p.woff2") format("woff2");
-                font-display: swap;
-                font-weight: 500;
-                font-style: normal;
-            }
-            @font-face {
-                font-family: 'MatterSemiMono';
-                src: url("https://www.openclimatefix.org/_next/static/media/9b45ed2becda4cf0-s.p.woff2") format("woff2");
-                font-display: swap;
-                font-weight: 400;
-                font-style: normal;
-            }
-            @font-face {
-                font-family: 'MatterSemiMono';
-                src: url("https://www.openclimatefix.org/_next/static/media/6691cdfe795c627c-s.p.woff2") format("woff2");
-                font-display: swap;
-                font-weight: 500;
-                font-style: normal;
-            }
-            html, body, [class*="css"] {
-                font-family: 'MatterXH', 'Arial', sans-serif !important;
-            }
-            [data-testid="stHeader"] {
-                height: 60px !important;
-                min-height: 60px !important;
-                padding: 0 1rem !important;
-                border-bottom: 1px solid rgba(0,0,0,0.1);
-            }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
+    # Compact header styling and custom fonts
+    css_path = Path(__file__).parent / "style.css"
+    if css_path.exists():
+        st.markdown(f"<style>{css_path.read_text()}</style>", unsafe_allow_html=True)
 
     country_page_ref = st.Page(country_page, title="Country")
 
