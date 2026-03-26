@@ -34,7 +34,7 @@ def main_page() -> None:
     with cols[0]:
         st.header("Global Solar Forecast")
     with cols[1]:
-        logo_path = "src/assets/ocf_logo_dark_square.png"
+        logo_path = "src/assets/ocf_logo_square.png"
         if Path(logo_path).exists():
             st.markdown(
                 f'<a href="https://www.openclimatefix.org" target="_blank">'
@@ -499,6 +499,44 @@ if __name__ == "__main__":
     st.markdown(
         """
         <style>
+            @font-face {
+                font-family: 'MatterXH';
+                src: url("https://www.openclimatefix.org/_next/static/media/ff26d691274c557e-s.p.woff2") format("woff2");
+                font-display: swap;
+                font-weight: 300;
+                font-style: normal;
+            }
+            @font-face {
+                font-family: 'MatterXH';
+                src: url("https://www.openclimatefix.org/_next/static/media/1f1458619779bfe1-s.p.woff2") format("woff2");
+                font-display: swap;
+                font-weight: 400;
+                font-style: normal;
+            }
+            @font-face {
+                font-family: 'MatterXH';
+                src: url("https://www.openclimatefix.org/_next/static/media/fb07625001d8a40d-s.p.woff2") format("woff2");
+                font-display: swap;
+                font-weight: 500;
+                font-style: normal;
+            }
+            @font-face {
+                font-family: 'MatterSemiMono';
+                src: url("https://www.openclimatefix.org/_next/static/media/9b45ed2becda4cf0-s.p.woff2") format("woff2");
+                font-display: swap;
+                font-weight: 400;
+                font-style: normal;
+            }
+            @font-face {
+                font-family: 'MatterSemiMono';
+                src: url("https://www.openclimatefix.org/_next/static/media/6691cdfe795c627c-s.p.woff2") format("woff2");
+                font-display: swap;
+                font-weight: 500;
+                font-style: normal;
+            }
+            html, body, [class*="css"] {
+                font-family: 'MatterXH', 'Arial', sans-serif !important;
+            }
             [data-testid="stHeader"] {
                 height: 60px !important;
                 min-height: 60px !important;
