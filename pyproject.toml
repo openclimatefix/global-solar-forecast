@@ -28,6 +28,7 @@ dependencies = [
     "plotly",
     "scipy",
     "timezonefinder",
+    "pytz>=2025.2",
 ]
 
 [dependency-groups]
