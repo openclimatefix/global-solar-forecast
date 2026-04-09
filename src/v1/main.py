@@ -482,7 +482,6 @@ def capacities_page() -> None:
         display_df,
         hide_index=True,
         width="stretch",  # Spreads the table nicely across the page
-        height="content",  # Removes the scrollable container box
         column_config={
             "Source": st.column_config.LinkColumn(
                 "Source",
