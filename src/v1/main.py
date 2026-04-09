@@ -34,7 +34,7 @@ def main_page() -> None:
     with cols[0]:
         st.header("Global Solar Forecast")
     with cols[1]:
-        logo_path = "src/assets/ocf_logo_dark_square.png"
+        logo_path = "src/assets/ocf_logo_square.png"
         if Path(logo_path).exists():
             st.markdown(
                 f'<a href="https://www.openclimatefix.org" target="_blank">'
@@ -495,20 +495,10 @@ def capacities_page() -> None:
 
 
 if __name__ == "__main__":
-    # Compact header styling
-    st.markdown(
-        """
-        <style>
-            [data-testid="stHeader"] {
-                height: 60px !important;
-                min-height: 60px !important;
-                padding: 0 1rem !important;
-                border-bottom: 1px solid rgba(0,0,0,0.1);
-            }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
+    # Compact header styling and custom fonts
+    css_path = Path(__file__).parent / "style.css"
+    if css_path.exists():
+        st.markdown(f"<style>{css_path.read_text()}</style>", unsafe_allow_html=True)
 
     country_page_ref = st.Page(country_page, title="Country")
 
