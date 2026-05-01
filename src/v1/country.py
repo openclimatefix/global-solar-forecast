@@ -261,6 +261,7 @@ def country_page() -> None:
         xaxis_title="Local Time",
         yaxis_range=[0, None],
         title=f"Solar Forecast for {country.name} (Local Time)",
+        font={"family": "MatterXH, Arial, sans-serif"},
     )
 
     st.plotly_chart(fig)
