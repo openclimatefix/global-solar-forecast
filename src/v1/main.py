@@ -185,6 +185,7 @@ def main_page() -> None:
             xaxis_title="Time (UTC)",
             yaxis_range=[0, None],
             title="Global Solar Power Forecast",
+            font={"family": "MatterXH, Arial, sans-serif"},
         )
         st.plotly_chart(fig)
     else:
@@ -240,7 +241,11 @@ def main_page() -> None:
                 "x": 1,
             },
             hovermode="x unified",
-            hoverlabel={"namelength": 20, "font": {"size": 12}},
+            hoverlabel={
+                "namelength": 20,
+                "font": {"size": 12, "family": "MatterXH, Arial, sans-serif"},
+            },
+            font={"family": "MatterXH, Arial, sans-serif"},
         )
         st.plotly_chart(fig)
 
@@ -356,6 +361,7 @@ def main_page() -> None:
             "showocean": True,
             "oceancolor": "rgba(0,0,0,0)",
         },
+        font={"family": "MatterXH, Arial, sans-serif"},
     )
 
     clicked_data = st.plotly_chart(fig, on_select="rerun", key="world_map")
