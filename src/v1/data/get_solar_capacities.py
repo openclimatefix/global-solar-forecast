@@ -15,8 +15,8 @@ url = (
 df = pd.read_csv(url)
 
 
-# only select year 2024
-df = df[df["Year"] == 2024]
+# only select year 2025
+df = df[df["Year"] == 2025]
 # only select solar
 df = df[df["Category"] == "Capacity"]
 df = df[df["Variable"] == "Solar"]
