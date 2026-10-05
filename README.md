@@ -4,7 +4,7 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
  
-[![workflows badge](https://img.shields.io/github/actions/workflow/status/openclimatefix/global-solar-forecast/ci.yml?branch=maine&color=FFD053&label=workflow)](https://github.com/openclimatefix/global-solar-forecast/actions/workflows/ci.yml)
+[![workflows badge](https://img.shields.io/github/actions/workflow/status/openclimatefix/global-solar-forecast/ci.yml?branch=main&color=FFD053&label=workflow)](https://github.com/openclimatefix/global-solar-forecast/actions/workflows/ci.yml)
 [![tags badge](https://img.shields.io/github/v/tag/openclimatefix/global-solar-forecast?include_prereleases&sort=semver&color=FFAC5F)](https://github.com/openclimatefix/global-solar-forecast/tags)
 [![contributors badge](https://img.shields.io/github/contributors/openclimatefix/global-solar-forecast?color=FFFFFF)](https://github.com/openclimatefix/global-solar-forecast/graphs/contributors)
 
@@ -12,12 +12,12 @@
 
 ⚠️ This project is a working-in-progress
 
-This aim of this project is to make a global solar forecast: a 0-48 hours forecast for every country in the world. We get the solar capacity for every country (mainly collected from Ember and Our World in Data and added in manually), and then create a solar forecast, displayed in the UI in various charts.
+The aim of this project is to make a global solar forecast: a 0-48 hours forecast for every country in the world. We get the solar capacity for every country (mainly collected from Ember and Our World in Data and added in manually), and then create a solar forecast, displayed in the UI in various charts.
 
 We've presented Global Solar Forecast at **FOSDEM 2026**, talking about why we built it, how it works, and how we hope for it to develop. [Watch the talk](https://video.fosdem.org/2026/aw1126/M3TKEE-ocf-global-solar-forecast.av1.webm)
 
 The **solar forecast** is very simple, 
-- as it assume one solar panel in the middle of the country, 
+- as it assumes one solar panel in the middle of the country, 
 - then we scaled it to the capacity of the country
 - We use `open.quartz.solar` which is for domestic solar, and uses free weather forecasts. 
 
@@ -73,7 +73,7 @@ flowchart TB
 
 
 
-TODO add weblink of where this is deployed
+<!-- TODO: add deployment URL when the public Streamlit app is published -->
 
 
 ## FAQ
