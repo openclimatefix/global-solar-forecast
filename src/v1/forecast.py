@@ -26,11 +26,17 @@ def get_forecast(
         "tilt": abs(lat) / 2,
         "orientation": 180 if lat > 0 else 0,
     }
-    now = pd.Timestamp.utcnow().floor("h").replace(tzinfo=None).isoformat()
+    now = pd.Timestamp.now("UTC").floor("h").tz_localize(None).isoformat()
     data = {"site": site, "timestamp": now}
     url = "https://open.quartz.solar/forecast/"
 
-    r = requests.post(url, json=data, timeout=20)
+    try:
+        r = requests.post(url, json=data, timeout=20)
+    except requests.RequestException as exc:
+        # Connection resets / timeouts while loading many countries should not
+        # crash the Streamlit app; skip this country and keep going.
+        st.error(f"Error fetching forecast for {name}: {exc}")
+        return None
 
     if r.status_code == 200:
         forecast = r.json()
