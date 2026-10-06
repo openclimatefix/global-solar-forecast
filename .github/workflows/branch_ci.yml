@@ -1,19 +1,47 @@
 name: Non-Default Branch Push CI (Python)
 
-on:  
+# Lint, typecheck and test the package on branch pushes and pull requests.
+# This used to call openclimatefix/.github's nondefault_branch_push_ci_python.yml,
+# which was removed from that repo, so the steps are now defined inline.
+
+on:
   push:
     branches-ignore: [ "main" ]
     paths-ignore: ['README.md']
   pull_request:
-    types: ["opened", "reopened", "edited"]
+    types: ["opened", "reopened", "synchronize"]
     paths-ignore: ["README.md"]
 
-jobs:
-  branch-ci:
-    uses: openclimatefix/.github/.github/workflows/nondefault_branch_push_ci_python.yml@main
-    secrets: inherit
-    with:
-      enable_linting: true
-      enable_typechecking: true
-      tests_folder: tests
+permissions:
+  contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-typecheck-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
+
+      - name: Install package and dev dependencies
+        run: uv sync
+
+      - name: Lint package
+        run: uv run ruff check --output-format=github .
+
+      - name: Typecheck package
+        run: uv run mypy .
+
+      - name: Run unit tests
+        run: uv run python -m pytest tests
